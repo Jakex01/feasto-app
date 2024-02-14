@@ -1,0 +1,95 @@
+
+<div class="full-width-container">
+<!--  <div class="text-content">SPANISH FOOD</div>-->
+<!--  <div class="image-box">-->
+<!--    <img ngSrc="./assets/delicious1.jpg" alt="Spanish Food Image" class="image-style" height="220"-->
+<!--         width="220">-->
+<!--  </div>-->
+</div>
+
+
+
+<div class="container-fluid">
+
+  <div class="row justify-content-center">
+
+    <div class="col-md-5 d-flex">
+      <div class="local-icon-style">
+        <div class="restaurant-name">
+         {{restaurant.name}}
+          <button class="btn card-button heart-button" (click)="toggleHeart(0)">
+            <i [class]="heartStates[0] ? 'fas fa-heart heart-filled heart-style' : 'far fa-heart heart-style'" ></i>
+          </button>
+        </div>
+
+
+
+        <div class="opening-hours"> {{restaurant.locations[0].city}}, {{restaurant.locations[0].street}} {{restaurant.locations[0].streetNumber}}</div>
+        <div class="opening-hours">Opening hours: {{restaurant.openingHours}}</div>
+
+        <button class="btn scroll-down-btn" aria-label="Scroll to next section" (click)="scrollToNextSection()">
+          <span class="material-icons icon-large icon-scroll-down-btn">keyboard_double_arrow_down</span>
+        </button>
+      </div>
+
+
+    </div>
+
+    <div class="col-md-5 d-flex bordered-column custom-section">
+
+      <!-- app.component.html -->
+      <div class="gray-text">
+      {{restaurant.description}}
+        This is continuation of our descirpition finally we can assume that
+        we are ready for serving food
+      </div>
+      <div class="d-flex ratings ratings-cont">
+
+        <ng-container *ngFor="let star of stars">
+          <i class="material-icons icon-style">{{ star }}</i>
+        </ng-container>
+        <div class="custom-rating ">
+          <div>
+            {{ restaurant.rating % 1 === 0 ? ('('+restaurant.rating + '.0)') : '(' +restaurant.rating+')' }}
+          </div>
+          <i class="bi bi-dot dot"></i>
+          <a href="#" class="custom-underline">3 opinions</a>
+        </div>
+        <i class="bi bi-dot dot"></i>
+        <button class="btn btn-custom" (click)="toggleCommentVisibility()">
+          <i class="material-icons">add_circle_outline</i>
+        </button>
+      </div>
+
+      <div *ngIf="isCommentVisible" class="comment-section" @fadeIn>
+        <p>(4.0) <strong>Average comment:</strong> Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet..Lorem ipsum dolor sit amet..</p>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+<nav #nextSection class="categories-navbar" style="margin-top: 15rem">
+  <ul>
+    <li *ngFor="let category of categories" (click)="selectCategory(category)">
+      {{ category }}
+    </li>
+  </ul>
+</nav>
+<h2> qewqeq</h2>
+<h2> qewqeq</h2>
+<h2> qewqeq</h2>
+<h2> qewqeq</h2>
+<h2> qewqeq</h2>
+<h2> qewqeq</h2>
+<h2> qewqeq</h2>
+<h2> qewqeq</h2>
+<h2> qewqeq</h2>
+<h2> qewqeq</h2>
+
