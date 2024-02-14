@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "feasto-frontend:build:production"
+              "buildTarget": "feasto-frontend:build:production"
             },
             "development": {
-              "browserTarget": "feasto-frontend:build:development"
+              "buildTarget": "feasto-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "feasto-frontend:build"
+            "buildTarget": "feasto-frontend:build"
           }
         },
         "test": {
