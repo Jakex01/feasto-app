@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'feasto-frontend';
+
+  prepareRoute(outlet: RouterOutlet): string | undefined {
+    return outlet.activatedRouteData['animation'] as string;
+  }
 }
