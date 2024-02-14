@@ -1,29 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {RestaurantService} from "../service/restaurant-service/restaurant.service";
 import {RestaurantResponse} from "../model/response/RestaurantResponse";
-import {RestaurantDtoModel} from "../model/RestaurantDtoModel";
 import {ActivatedRoute} from "@angular/router";
-import {fadeInOut} from "../animations";
-import {animate, state, style, transition, trigger} from "@angular/animations";
 import {RatingResponse} from "../model/response/RatingResponse";
+import {RatingService} from "../service/rating-service/rating.service";
 @Component({
   selector: 'app-restaurant-page',
   templateUrl: './restaurant-page.component.html',
   styleUrls: ['./restaurant-page.component.css'],
-  animations: [
-    trigger('fadeIn', [
-      // stan początkowy jest niewidoczny (opacity: 0)
-      state('void', style({ opacity: 0 })),
-      // przejście z niewidocznego do widocznego (fade in)
-      transition('void => *', [
-        animate('0.5s ease-in')
-      ]),
-      // Możesz też dodać przejście od widocznego do niewidocznego (fade out) jeśli potrzebujesz
-      transition('* => void', [
-        animate('0.5s ease-out', style({ opacity: 0 }))
-      ])
-    ])
-  ]
 })
 export class RestaurantPageComponent implements OnInit{
   @ViewChild('nextSection') nextSection: ElementRef;
@@ -32,10 +16,15 @@ export class RestaurantPageComponent implements OnInit{
   stars: string[] = [];
   restaurant: RestaurantResponse;
   id: number;
+  isCommentVisible = false;
   ratingResponse: RatingResponse;
 
+  ratingByRestaurant: RatingResponse;
+
   constructor(private restaurantService: RestaurantService,
-              private route: ActivatedRoute,) {
+              private route: ActivatedRoute,
+              private ratingService: RatingService
+              ) {
   }
   ngOnInit(): void {
 
@@ -45,7 +34,7 @@ export class RestaurantPageComponent implements OnInit{
       next: (response: RestaurantResponse) => {
         this.restaurant = response;
         this.updateStars(this.restaurant.rating);
-        console.log(response);
+        console.log("my response: " + response.description);
       },
       error: (error) => {
         console.error('Error fetching restaurants:', error);
@@ -69,7 +58,7 @@ export class RestaurantPageComponent implements OnInit{
   }
   scrollToNextSection() {
     window.scrollBy({
-      top: window.innerHeight, // Change this value to adjust the scroll amount
+      top: window.innerHeight,
       left: 0,
       behavior: 'smooth'
     });
@@ -80,21 +69,33 @@ export class RestaurantPageComponent implements OnInit{
 
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
-        this.stars.push('star'); // Pełna gwiazdka
+        this.stars.push('star');
       } else if (!hasHalfStarBeenAdded && rating % 1 !== 0 && i - 1 < rating && i > rating) {
-        this.stars.push('star_half'); // Półpełna gwiazdka
-        hasHalfStarBeenAdded = true; // Zapobiega dodaniu więcej niż jednej pół gwiazdki
+        this.stars.push('star_half');
+        hasHalfStarBeenAdded = true;
       } else {
-        this.stars.push('star_outline'); // Pusta gwiazdka
+        this.stars.push('star_outline');
       }
     }
   }
-  isCommentVisible = false; // Domyślnie komentarz jest ukryty
+
 
   toggleCommentVisibility() {
+    this.getAverageComment(this.restaurant.restaurantId, this.restaurant.rating)
+    this.isCommentVisible = !this.isCommentVisible;
+  }
 
+  getAverageComment(restaurantId: number, averageRating: number){
+    this.ratingService.getAverageComment(restaurantId, averageRating)
+      .subscribe({
+        next: (rating) => {
+          this.ratingResponse = rating;
 
-    this.isCommentVisible = !this.isCommentVisible; // Zmienia stan widoczności
+        },
+        error: (err) => {
+          console.error('Failed to load average rating:', err);
+        }
+      });
   }
 
 }

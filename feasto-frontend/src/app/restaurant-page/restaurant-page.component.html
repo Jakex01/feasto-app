@@ -16,7 +16,8 @@
     <div class="col-md-5 d-flex">
       <div class="local-icon-style">
         <div class="restaurant-name">
-         {{restaurant.name}}
+<!--         {{restaurant?.name}}-->
+          Piggy Paggy
           <button class="btn card-button heart-button" (click)="toggleHeart(0)">
             <i [class]="heartStates[0] ? 'fas fa-heart heart-filled heart-style' : 'far fa-heart heart-style'" ></i>
           </button>
@@ -24,7 +25,8 @@
 
 
 
-        <div class="opening-hours"> {{restaurant.locations[0].city}}, {{restaurant.locations[0].street}} {{restaurant.locations[0].streetNumber}}</div>
+<!--        <div class="opening-hours"> {{restaurant.locations[0].city}}, {{restaurant.locations[0].street}} {{restaurant.locations[0].streetNumber}}</div>-->
+        <div class="opening-hours"> Kielce, Lotnicza 27</div>
         <div class="opening-hours">Opening hours: {{restaurant.openingHours}}</div>
 
         <button class="btn scroll-down-btn" aria-label="Scroll to next section" (click)="scrollToNextSection()">
@@ -53,7 +55,7 @@
             {{ restaurant.rating % 1 === 0 ? ('('+restaurant.rating + '.0)') : '(' +restaurant.rating+')' }}
           </div>
           <i class="bi bi-dot dot"></i>
-          <a href="#" class="custom-underline">3 opinions</a>
+          <a href="#" class="custom-underline" data-bs-toggle="modal" data-bs-target="#commentsModal">{{restaurant.commentsCount}} opinions</a>
         </div>
         <i class="bi bi-dot dot"></i>
         <button class="btn btn-custom" (click)="toggleCommentVisibility()">
@@ -61,8 +63,8 @@
         </button>
       </div>
 
-      <div *ngIf="isCommentVisible" class="comment-section" @fadeIn>
-        <p>(4.0) <strong>Average comment:</strong> Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet..Lorem ipsum dolor sit amet..</p>
+      <div *ngIf="isCommentVisible" class="comment-section">
+        <p>({{ratingResponse.rating}}) <strong>Average comment:</strong> {{ratingResponse.review}}</p>
       </div>
 
 
@@ -72,6 +74,30 @@
   </div>
 
 </div>
+
+
+<!-- Modal -->
+<div class="modal  fade" id="commentsModal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="commentsModalLabel">Comments</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Tutaj wstaw zawartość komentarzy -->
+        <p>First comment</p>
+        <p>First comment</p>
+        <p>First comment</p>
+        <p>First comment</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 

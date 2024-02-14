@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import {NgOptimizedImage} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MainNavbarComponent} from "./main-navbar/main-navbar.component";
 import {RestaurantPageComponent} from "./restaurant-page/restaurant-page.component";
 import {CreateRestaurantComponent} from "./create-restaurant/create-restaurant.component";
@@ -28,7 +27,6 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     NgbModule,

@@ -13,4 +13,5 @@ export interface RestaurantResponse {
   createDate: string;
   locations: LocationResponse[];
   menuItems: MenuItemResponse[];
+  commentsCount: number
 }

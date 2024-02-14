@@ -11,8 +11,13 @@ export class RatingService {
 
   constructor(private http: HttpClient) { }
 
-  getAverageRating(restaurantId: number){
-    return this.http.get<RatingResponse>(`${this.baseUrl}//api/rating/average/${restaurantId}`);
+  getAverageComment(restaurantId: number, averageRating?: number){
+    let queryParams = '';
+    if (averageRating !== undefined) {
+      queryParams = `?averageRating=${averageRating}`;
+    }
+
+    return this.http.get<RatingResponse>(`${this.baseUrl}/api/rating/average/${restaurantId}${queryParams}`);
   }
 
 }
