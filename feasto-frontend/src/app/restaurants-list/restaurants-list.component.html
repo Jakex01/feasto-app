@@ -67,7 +67,7 @@
                height="1080" width="1920" priority>
           <img [ngSrc]="restaurant.image" *ngIf="restaurant.image" alt="{{ restaurant.name }}" fill>
 
-          <div class="rating">{{ restaurant.rating % 1 === 0 ? (''+restaurant.rating + '.0') : '' +restaurant.rating+'' }}</div>
+          <div class="rating">{{ restaurant.rating % 1 === 0 ? (''+restaurant.rating + '.0') : '' +restaurant.rating.toFixed(1)+'' }}</div>
         </div>
         <div class="card-body text-center">
           <div class="card-title-heart">

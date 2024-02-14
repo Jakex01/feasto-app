@@ -19,5 +19,8 @@ export class RatingService {
 
     return this.http.get<RatingResponse>(`${this.baseUrl}/api/rating/average/${restaurantId}${queryParams}`);
   }
+  getRestaurantComments(restaurantId: number){
+    return this.http.get<RatingResponse[]>(`${this.baseUrl}/api/rating/${restaurantId}`);
+  }
 
 }

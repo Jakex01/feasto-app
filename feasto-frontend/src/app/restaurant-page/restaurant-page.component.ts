@@ -4,6 +4,7 @@ import {RestaurantResponse} from "../model/response/RestaurantResponse";
 import {ActivatedRoute} from "@angular/router";
 import {RatingResponse} from "../model/response/RatingResponse";
 import {RatingService} from "../service/rating-service/rating.service";
+import {MenuItemResponse} from "../model/response/MenuItemResponse";
 @Component({
   selector: 'app-restaurant-page',
   templateUrl: './restaurant-page.component.html',
@@ -18,8 +19,10 @@ export class RestaurantPageComponent implements OnInit{
   id: number;
   isCommentVisible = false;
   ratingResponse: RatingResponse;
+   uniqueFoodCategoriesSet = new Set<String>();
+    foodListByCategory: MenuItemResponse[] = [];
 
-  ratingByRestaurant: RatingResponse;
+   CommentsByRestaurant: RatingResponse[] = [];
 
   constructor(private restaurantService: RestaurantService,
               private route: ActivatedRoute,
@@ -34,16 +37,49 @@ export class RestaurantPageComponent implements OnInit{
       next: (response: RestaurantResponse) => {
         this.restaurant = response;
         this.updateStars(this.restaurant.rating);
-        console.log("my response: " + response.description);
+        this.selectFoodCategories();
       },
       error: (error) => {
         console.error('Error fetching restaurants:', error);
       },
     });
   }
-  selectCategory(category: string) {
-    // Logic to display the selected category's items
-    console.log(category);
+  selectFoodCategories(){
+    this.restaurant.menuItems.forEach((menuItem: MenuItemResponse)=>{
+      if(!this.uniqueFoodCategoriesSet.has(menuItem.category)){
+        this.uniqueFoodCategoriesSet.add(menuItem.category);
+      }
+    })
+
+  }
+  fetchAllComments(){
+
+      if (this.restaurant && this.restaurant.restaurantId) {
+        this.ratingService.getRestaurantComments(this.restaurant.restaurantId).subscribe({
+          next: (response) => {
+            this.CommentsByRestaurant = response;
+            console.log('Comments:', response);
+          },
+          error: (error) => {
+            console.error('Error fetching comments:', error);
+
+          }
+        });
+      } else {
+        console.error('Restaurant ID is not defined.');
+      }
+
+  }
+  selectFoodCategory(category: String) {
+
+    if(this.restaurant){
+      this.foodListByCategory = [];
+      this.restaurant.menuItems.forEach((menuItem: MenuItemResponse)=>{
+        if(menuItem.category.toLowerCase() === category.toLowerCase()){
+          this.foodListByCategory.push(menuItem);
+        }
+      })
+    }
   }
   toggleHeart(index: number): void {
     this.heartStates[index] = !this.heartStates[index];
@@ -98,4 +134,20 @@ export class RestaurantPageComponent implements OnInit{
       });
   }
 
+  checkingRatingCreateDate(date: string): string {
+    const today = new Date();
+    const commentDate = new Date(date);
+    let diffInDays = Math.floor((today.getTime() - commentDate.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (diffInDays <= 7) {
+      return diffInDays === 0 ? `today` : `${diffInDays} days ago`; // Adding handling for 'today'
+    } else {
+      // For dates more than 7 days ago, format the date
+      return commentDate.toLocaleDateString('pl-PL', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+    }
+  }
 }

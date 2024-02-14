@@ -52,10 +52,10 @@
         </ng-container>
         <div class="custom-rating ">
           <div>
-            {{ restaurant.rating % 1 === 0 ? ('('+restaurant.rating + '.0)') : '(' +restaurant.rating+')' }}
+            {{ restaurant.rating % 1 === 0 ? ('('+restaurant.rating + '.0)') : '(' +restaurant.rating.toFixed(2)+')' }}
           </div>
           <i class="bi bi-dot dot"></i>
-          <a href="#" class="custom-underline" data-bs-toggle="modal" data-bs-target="#commentsModal">{{restaurant.commentsCount}} opinions</a>
+          <a href="#" class="custom-underline" data-bs-toggle="modal" data-bs-target="#commentsModal" (click)="fetchAllComments()">{{restaurant.commentsCount}} opinions</a>
         </div>
         <i class="bi bi-dot dot"></i>
         <button class="btn btn-custom" (click)="toggleCommentVisibility()">
@@ -64,7 +64,13 @@
       </div>
 
       <div *ngIf="isCommentVisible" class="comment-section">
-        <p>({{ratingResponse.rating}}) <strong>Average comment:</strong> {{ratingResponse.review}}</p>
+        <p>
+          ({{ratingResponse.rating}}) <strong>Average comment:</strong> {{ratingResponse.review}}
+          <br>
+        </p>
+        <div class="comment-date">
+          {{ checkingRatingCreateDate(ratingResponse.createDate) }}
+        </div>
       </div>
 
 
@@ -86,10 +92,10 @@
       </div>
       <div class="modal-body">
         <!-- Tutaj wstaw zawartość komentarzy -->
-        <p>First comment</p>
-        <p>First comment</p>
-        <p>First comment</p>
-        <p>First comment</p>
+        <div *ngFor="let comment of CommentsByRestaurant">
+          <p>Rating: {{ comment.rating }}</p>
+          <p>Review: {{ comment.review }}</p>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -100,22 +106,43 @@
 
 
 
-
-<nav #nextSection class="categories-navbar" style="margin-top: 15rem">
+<nav class="categories-navbar">
   <ul>
-    <li *ngFor="let category of categories" (click)="selectCategory(category)">
-      {{ category }}
+    <li *ngFor="let category of uniqueFoodCategoriesSet">
+      <button type="button" class="btn btn-category" (click)="selectFoodCategory(category)">
+        {{ category }}
+      </button>
     </li>
   </ul>
 </nav>
-<h2> qewqeq</h2>
-<h2> qewqeq</h2>
-<h2> qewqeq</h2>
-<h2> qewqeq</h2>
-<h2> qewqeq</h2>
-<h2> qewqeq</h2>
-<h2> qewqeq</h2>
-<h2> qewqeq</h2>
-<h2> qewqeq</h2>
-<h2> qewqeq</h2>
+
+<div *ngIf="foodListByCategory.length > 0" class="food-card-container">
+  <div *ngFor="let foodItem of foodListByCategory" class="food-card">
+<!--    <img ngSrc="./assets/default_restaurant_image.jpg" alt="{{ foodItem.name }}" class="food-image" fill>-->
+    <div class="food-info">
+<!--      <span class="food-tag">#1 most liked</span>-->
+      <h2 class="food-name">{{ foodItem.name }}</h2>
+      <p class="food-description">{{ foodItem.description }} more and more description is being written
+        more and more description is being written
+      </p>
+      <p class="food-price">100 zł</p>
+      <button type="button" class="btn btn-add">+</button>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+
+
+<!--<h2> qewqeq</h2>-->
+<!--<h2> qewqeq</h2>-->
+<!--<h2> qewqeq</h2>-->
+<!--<h2> qewqeq</h2>-->
+<!--<h2> qewqeq</h2>-->
+<!--<h2> qewqeq</h2>-->
+<!--<h2> qewqeq</h2>-->
+<!--<h2> qewqeq</h2>-->
+<!--<h2> qewqeq</h2>-->
+<!--<h2> qewqeq</h2>-->
 
