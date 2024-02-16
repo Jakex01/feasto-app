@@ -24,21 +24,25 @@ public class RatingService {
         ratingRepository.save(MapStructMapper.INSTANCE.requestRatingToRatingEntity(postRatingRequest));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    public ResponseEntity<List<RatingEntity>> getRatingByRestaurantId(Long restaurantId) {
-       List<RatingEntity> ratingEntityList =  ratingRepository
-                .findAllByRestaurantRestaurantId(restaurantId);
+    public ResponseEntity<List<RatingResponse>> getRatingByRestaurantId(Long restaurantId) {
+       List<RatingResponse> ratingEntityList =  ratingRepository
+                .findAllByRestaurantRestaurantId(restaurantId)
+               .stream()
+               .map(MapStructMapper.INSTANCE::ratingEntityToRatingResponse)
+               .toList();
+
        return ResponseEntity.ok(ratingEntityList);
     }
 
-    public ResponseEntity<RatingResponse> getAverageRatingByRestaurantId(Long restaurantId, double averageRating) {
-//        RatingResponse ratingResponse=  ratingRepository
-//                .findAllByRestaurantRestaurantId(restaurantId)
-//                .stream()
-//                .min(Comparator.comparingDouble(rating->
-//                        rating.getRating() - averageRating))
-//                .map(MapStructMapper.INSTANCE::ratingEntityToRatingResponse)
-//                .orElse(null);
+    public ResponseEntity<RatingResponse> getAverageRatingByRestaurantId(Long restaurantId, Double averageRating) {
+        RatingResponse ratingResponse = ratingRepository
+                .findAllByRestaurantRestaurantId(restaurantId)
+                .stream()
+                .min(Comparator.comparingDouble(rating ->
+                        Math.abs(rating.getRating() - averageRating)))
+                .map(MapStructMapper.INSTANCE::ratingEntityToRatingResponse)
+                .orElse(null);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(ratingResponse);
     }
 }

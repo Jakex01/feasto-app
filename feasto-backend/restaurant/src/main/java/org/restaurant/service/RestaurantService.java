@@ -8,6 +8,7 @@ import org.restaurant.mapstruct.dto.MapStructMapper;
 import org.restaurant.mapstruct.dto.RestaurantEntityDTO;
 import org.restaurant.model.LocationEntity;
 import org.restaurant.model.RestaurantEntity;
+
 import org.restaurant.repository.RestaurantRepository;
 import org.restaurant.request.CreateRestaurantRequest;
 import org.restaurant.response.RestaurantResponse;
@@ -17,10 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
-import static org.restaurant.util.RestaurantUtils.calculateAveragePrice;
-import static org.restaurant.util.RestaurantUtils.calculateAverageRating;
+import static org.restaurant.util.RestaurantUtils.*;
 
 
 @Service
@@ -30,7 +29,6 @@ public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
     private final ObjectsValidator<CreateRestaurantRequest> objectsValidator;
-
     @Observed(name = "create.restaurant")
     public ResponseEntity<?> createRestaurant(CreateRestaurantRequest createRestaurantRequest) {
         objectsValidator.validate(createRestaurantRequest);
@@ -50,19 +48,9 @@ public class RestaurantService {
     @Observed(name = "get.restaurants")
     public ResponseEntity<List<RestaurantEntityDTO>> getAllRestaurants(){
 
-        Optional<RestaurantEntity> restaurantEntity = restaurantRepository.findById(1L);
-
-        restaurantEntity.ifPresent(t->{
-            System.out.println("to jest restauracja: " + t.getName() + t.getDescription());
-        });
-
                 List<RestaurantEntityDTO> restaurantDTOs = restaurantRepository
                         .findAll()
                         .stream()
-                        .peek(restaurant -> {
-                            double averageRating = calculateAverageRating(restaurant.getRatings());
-                            restaurant.setRating(averageRating);
-                        })
                         .map(MapStructMapper.INSTANCE::restaurantToRestaurantDto)
                         .toList();
         return ResponseEntity.ok(restaurantDTOs);
@@ -90,6 +78,7 @@ public class RestaurantService {
                 .forEach(restaurant -> {
             restaurant.setRating(calculateAverageRating(restaurant.getRatings()));
             restaurant.setPrices((int)calculateAveragePrice(restaurant));
+            restaurant.setCommentsCount(calculateCountOfRatings(restaurant.getRatings()));
             restaurantRepository.save(restaurant);
             restaurantRepository.flush();
         });

@@ -22,4 +22,7 @@ public class RestaurantUtils {
                 .average()
                 .orElse(0.0);
     }
+    public static long calculateCountOfRatings(List<RatingEntity> ratings) {
+        return ratings.size();
+    }
 }

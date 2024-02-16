@@ -15,6 +15,7 @@ public record RestaurantResponse(
         String image,
         LocalDateTime createDate,
         List<LocationResponse> locations,
-        List<MenuItemResponse> menuItems
+        List<MenuItemResponse> menuItems,
+        long commentsCount
 ) {
 }

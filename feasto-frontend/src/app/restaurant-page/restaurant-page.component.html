@@ -118,15 +118,15 @@
 
 <div *ngIf="foodListByCategory.length > 0" class="food-card-container">
   <div *ngFor="let foodItem of foodListByCategory" class="food-card">
-<!--    <img ngSrc="./assets/default_restaurant_image.jpg" alt="{{ foodItem.name }}" class="food-image" fill>-->
+    <!--    <img ngSrc="./assets/default_restaurant_image.jpg" alt="{{ foodItem.name }}" class="food-image" fill>-->
     <div class="food-info">
-<!--      <span class="food-tag">#1 most liked</span>-->
+      <!--      <span class="food-tag">#1 most liked</span>-->
       <h2 class="food-name">{{ foodItem.name }}</h2>
       <p class="food-description">{{ foodItem.description }} more and more description is being written
         more and more description is being written
       </p>
-      <p class="food-price">100 zł</p>
-      <button type="button" class="btn btn-add">+</button>
+      <p class="food-price">{{ foodItem.lowestPrice }} zł</p>
+      <button type="button" class="btn btn-add" (click)="openMenuItemModal()">+</button>
     </div>
   </div>
 </div>
@@ -135,14 +135,6 @@
 
 
 
-<!--<h2> qewqeq</h2>-->
-<!--<h2> qewqeq</h2>-->
-<!--<h2> qewqeq</h2>-->
-<!--<h2> qewqeq</h2>-->
-<!--<h2> qewqeq</h2>-->
-<!--<h2> qewqeq</h2>-->
-<!--<h2> qewqeq</h2>-->
-<!--<h2> qewqeq</h2>-->
-<!--<h2> qewqeq</h2>-->
-<!--<h2> qewqeq</h2>-->
+
+
 

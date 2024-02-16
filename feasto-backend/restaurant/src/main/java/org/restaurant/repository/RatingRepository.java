@@ -11,5 +11,6 @@ import java.util.Optional;
 @Repository
 public interface RatingRepository extends JpaRepository<RatingEntity, Long>{
     List<RatingEntity> findAllByRestaurantRestaurantId(Long restaurantId);
+    Long countByRestaurantRestaurantId(Long restaurantId);
 
 }

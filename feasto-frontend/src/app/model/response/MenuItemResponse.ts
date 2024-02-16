@@ -3,5 +3,6 @@ export interface MenuItemResponse {
   name: string,
   description: string,
   available: boolean,
-  category: string
+  category: string,
+  lowestPrice: number
 }

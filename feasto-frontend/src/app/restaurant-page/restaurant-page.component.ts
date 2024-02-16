@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {RatingResponse} from "../model/response/RatingResponse";
 import {RatingService} from "../service/rating-service/rating.service";
 import {MenuItemResponse} from "../model/response/MenuItemResponse";
+import {ModalManagerService} from "../service/modal-service/modal-manager.service";
 @Component({
   selector: 'app-restaurant-page',
   templateUrl: './restaurant-page.component.html',
@@ -26,7 +27,8 @@ export class RestaurantPageComponent implements OnInit{
 
   constructor(private restaurantService: RestaurantService,
               private route: ActivatedRoute,
-              private ratingService: RatingService
+              private ratingService: RatingService,
+              private modalManager: ModalManagerService
               ) {
   }
   ngOnInit(): void {
@@ -149,5 +151,10 @@ export class RestaurantPageComponent implements OnInit{
         day: '2-digit',
       });
     }
+    }
+
+  openMenuItemModal() {
+    this.modalManager.open();
   }
+
 }

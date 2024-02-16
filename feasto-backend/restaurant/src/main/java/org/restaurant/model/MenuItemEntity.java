@@ -25,17 +25,30 @@ public class MenuItemEntity {
     @Enumerated(EnumType.STRING)
     private FoodCategory category;
 
-    @ElementCollection(targetClass = FoodAdditive.class)
-    @Enumerated(EnumType.STRING)
+    @ElementCollection
     @CollectionTable(name = "menu_item_food_additives", joinColumns = @JoinColumn(name = "menu_item_id"))
-    @Column(name = "food_additive")
-    List<FoodAdditive> foodAdditiveList;
+    @MapKeyColumn(name = "food_additive")
+    @Column(name = "price")
+    @Enumerated(EnumType.STRING)
+    private Map<FoodAdditive, Double> foodAdditivePrices = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "menu_item_sizes", joinColumns = @JoinColumn(name = "menu_item_id"))
     @MapKeyColumn(name = "size")
     @Column(name = "price")
     private Map<String, Double> sizesWithPrices = new HashMap<>();
+
+    private Double lowestPrice;
+
+
+
+    @PrePersist
+    @PreUpdate
+    private void updateLowestPrice() {
+        this.lowestPrice = this.sizesWithPrices.values().stream()
+                .min(Double::compare)
+                .orElseThrow(() -> new IllegalStateException("Map with prices can't be empty"));
+    }
 
 
 }

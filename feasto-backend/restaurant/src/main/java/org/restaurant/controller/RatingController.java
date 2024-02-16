@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 @RequestMapping("/api/rating")
 public class RatingController {
 
@@ -25,7 +26,7 @@ public class RatingController {
     @GetMapping("/average/{id}")
     public ResponseEntity<?> getAverageRatingByRestaurantId(
             @PathVariable("id") @Valid Long restaurantId,
-            @RequestParam(value = "averageRating", required = false) double averageRating){
+            @RequestParam(value = "averageRating", required = false) Double averageRating){
         return ratingService.getAverageRatingByRestaurantId(restaurantId, averageRating);
     }
 }

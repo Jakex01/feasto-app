@@ -1,9 +1,11 @@
 package org.restaurant.response;
 
+import java.time.LocalDateTime;
+
 public record RatingResponse(
-        Long id,
         double rating,
         String review,
-        Long restaurantId
+        LocalDateTime createDate
+
 ) {
 }

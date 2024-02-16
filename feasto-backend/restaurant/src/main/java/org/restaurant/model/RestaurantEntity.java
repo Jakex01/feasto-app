@@ -28,6 +28,7 @@ public class RestaurantEntity {
     private String foodType;
     private int prices;
     private String image;
+    private long commentsCount;
 
     @CreatedDate
     @Column(
