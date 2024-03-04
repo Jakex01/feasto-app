@@ -26,7 +26,7 @@ public interface MapStructMapper {
 
     RatingEntity requestRatingToRatingEntity(PostRatingRequest request);
 
-    @Mapping(target = "name", ignore = false)
+
     RestaurantEntityDTO restaurantToRestaurantDto(RestaurantEntity restaurantEntity);
 
     LocationEntity locationRequestToLocationEntity(PostLocationRequest postLocationRequest);
@@ -34,10 +34,10 @@ public interface MapStructMapper {
 
     List<LocationResponse> locationEntityToLocationResponse(List<LocationEntity> locationEntity);
 
-    @Mapping(target = "name", ignore = false)
+
     RestaurantResponse restaurantEntityToRestaurantResponse(RestaurantEntity restaurantEntity);
 
-    @Mapping(target = "rating", ignore = false)
+
     RatingResponse ratingEntityToRatingResponse (RatingEntity ratingEntity);
 
 

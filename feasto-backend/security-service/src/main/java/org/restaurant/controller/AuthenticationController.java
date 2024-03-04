@@ -6,13 +6,10 @@ import org.restaurant.request.RegisterRequest;
 import org.restaurant.response.AuthenticationResponse;
 import org.restaurant.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
@@ -24,7 +21,7 @@ public class AuthenticationController {
     ){
         return ResponseEntity.ok(authenticationService.register(request));
     }
-    @PostMapping("/authenticate")
+    @GetMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ){
