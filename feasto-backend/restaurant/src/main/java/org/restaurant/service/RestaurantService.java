@@ -17,6 +17,8 @@ import org.restaurant.validators.ObjectsValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 import java.util.List;
 
 import static org.restaurant.util.RestaurantUtils.*;
@@ -56,8 +58,10 @@ public class RestaurantService {
         return ResponseEntity.ok(restaurantDTOs);
     }
     @Observed(name = "getById.restaurant")
-    public ResponseEntity<RestaurantResponse> findRestaurantById(Long restaurantId) {
+    public ResponseEntity<RestaurantResponse> findRestaurantById(Long restaurantId, Principal principal) {
 
+
+        System.out.println("to jest principal: "+ principal.getName());
         return restaurantRepository.findById(restaurantId)
                 .map(MapStructMapper.INSTANCE::restaurantEntityToRestaurantResponse)
                 .map(ResponseEntity::ok)

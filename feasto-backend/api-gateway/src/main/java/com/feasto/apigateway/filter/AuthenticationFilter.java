@@ -1,5 +1,8 @@
 package com.feasto.apigateway.filter;
 
+import com.feasto.apigateway.util.JwtUtil;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
@@ -7,14 +10,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
+
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 
 
-    private RouteValidator routeValidator;
-    private RestTemplate template;
+    private final RouteValidator routeValidator;
+    private final RestTemplate template;
 
-    public AuthenticationFilter() {
+    private final JwtUtil jwtUtil;
+
+    public AuthenticationFilter(RouteValidator routeValidator, RestTemplate template, JwtUtil jwtUtil) {
         super(Config.class);
+        this.routeValidator = routeValidator;
+        this.template = template;
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
@@ -31,8 +40,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     authHeader = authHeader.substring(7);
                 }
                 try{
-                    template.getForObject("http://SECURITY-SERVICE/api/auth/authenticate?token"+authHeader, String.class);
-
+                    jwtUtil.validateToken(authHeader);
                 }catch (Exception e){
                     throw new RuntimeException("unauthorized access to application!");
                 }

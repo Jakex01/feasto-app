@@ -10,6 +10,7 @@ import org.restaurant.service.RestaurantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -30,8 +31,9 @@ public class RestaurantController {
         return restaurantService.getAllRestaurants();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<RestaurantResponse> getRestaurantById(@PathVariable("id") @Valid Long restaurantId){
-        return restaurantService.findRestaurantById(restaurantId);
+    public ResponseEntity<RestaurantResponse> getRestaurantById(@PathVariable("id") @Valid Long restaurantId, Principal principal){
+
+        return restaurantService.findRestaurantById(restaurantId, principal);
     }
     @GetMapping("/filter")
     public ResponseEntity<List<RestaurantEntityDTO>> getRestaurantsByFilter(
