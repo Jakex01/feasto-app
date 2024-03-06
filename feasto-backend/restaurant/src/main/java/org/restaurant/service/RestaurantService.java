@@ -58,10 +58,8 @@ public class RestaurantService {
         return ResponseEntity.ok(restaurantDTOs);
     }
     @Observed(name = "getById.restaurant")
-    public ResponseEntity<RestaurantResponse> findRestaurantById(Long restaurantId, Principal principal) {
+    public ResponseEntity<RestaurantResponse> findRestaurantById(Long restaurantId) {
 
-
-        System.out.println("to jest principal: "+ principal.getName());
         return restaurantRepository.findById(restaurantId)
                 .map(MapStructMapper.INSTANCE::restaurantEntityToRestaurantResponse)
                 .map(ResponseEntity::ok)

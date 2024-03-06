@@ -31,9 +31,9 @@ public class RestaurantController {
         return restaurantService.getAllRestaurants();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<RestaurantResponse> getRestaurantById(@PathVariable("id") @Valid Long restaurantId, Principal principal){
+    public ResponseEntity<RestaurantResponse> getRestaurantById(@PathVariable("id") @Valid Long restaurantId){
 
-        return restaurantService.findRestaurantById(restaurantId, principal);
+        return restaurantService.findRestaurantById(restaurantId);
     }
     @GetMapping("/filter")
     public ResponseEntity<List<RestaurantEntityDTO>> getRestaurantsByFilter(
