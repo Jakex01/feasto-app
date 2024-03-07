@@ -15,6 +15,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
@@ -22,7 +23,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
-    ){
+    ) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
     @GetMapping("/authenticate")

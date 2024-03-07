@@ -645,25 +645,6 @@
   margin-bottom: 1rem;
 }
 
-.btn-add {
-  position: absolute;
-
-  bottom: -3.8rem;  /* Adjust as per the visual requirement */
-  right: -0.01rem;
-  margin-top: 3rem;
-  margin-right: 1rem;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
-  font-size: 1.5rem;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
 
 .spacer {
   height: 30rem;
@@ -739,4 +720,95 @@
 
 .spacer {
   height: 30rem;
+}
+
+
+
+
+
+
+
+
+
+/* You might want to add media queries for responsiveness */
+
+
+.modal-content {
+  font-family: 'Roboto', sans-serif;
+}
+
+.modal-header {
+  border-bottom: 1px solid #dee2e6; /* Bootstrap's default border color for a softer look */
+  background: #f7f7f7; /* Lighter grey for the header */
+}
+
+.modal-title {
+  font-weight: 500; /* Medium weight for the title */
+}
+
+.modal-body {
+  padding: 20px;
+  background: #fff; /* White background for the body */
+}
+
+.modal-footer {
+  background: #f7f7f7; /* Match the header */
+}
+
+.btn-primary {
+  background-color: #0056b3; /* A deeper blue */
+  border-color: #004085; /* Slightly darker border for contrast */
+}
+
+.btn-primary:hover {
+  background-color: #0069d9; /* Lighter blue on hover */
+  border-color: #005cbf;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.modal-content {
+  animation: fadeIn 0.5s ease-out;
+}
+.form-check-input {
+  margin-right: 10px;
+}
+
+.form-check-label {
+  margin-bottom: 0; /* Tighten up space between form controls */
+}
+
+textarea.form-control {
+  border-radius: 4px; /* Consistent rounded corners */
+  border: 1px solid #ced4da; /* Bootstrap's default border color for inputs */
+}
+
+.quantity-selector {
+  margin-right: auto;
+}
+
+.quantity-selector label {
+  font-weight: 500;
+}
+
+.form-select {
+  display: inline-block;
+  width: auto; /* So it doesn't take full width */
+  padding: .375rem 1.75rem .375rem .75rem; /* Bootstrap's default padding for form-select */
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-select:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
 }

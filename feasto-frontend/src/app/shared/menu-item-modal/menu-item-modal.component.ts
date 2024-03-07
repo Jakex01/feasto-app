@@ -11,26 +11,26 @@ declare var bootstrap: any;
   styleUrl: './menu-item-modal.component.css'
 })
 export class MenuItemModalComponent {
-  private modalInstance: any;
-
-  constructor(private elRef: ElementRef, private modalManager: ModalManagerService) {}
-
-  ngOnInit(): void {
-
-  }
-
-  ngAfterViewInit(): void {
-    this.modalInstance = new bootstrap.Modal(this.elRef.nativeElement.querySelector('#foodAdditiveModal'), {
-      keyboard: false
-    });
-    this.modalManager.register(this);
-  }
-
-  show() {
-    this.modalInstance.show();
-  }
-
-  hide() {
-    this.modalInstance.hide();
-  }
+  // private modalInstance: any;
+  //
+  // constructor(private elRef: ElementRef, private modalManager: ModalManagerService) {}
+  //
+  // ngOnInit(): void {
+  //
+  // }
+  //
+  // ngAfterViewInit(): void {
+  //   this.modalInstance = new bootstrap.Modal(this.elRef.nativeElement.querySelector('#foodAdditiveModal'), {
+  //     keyboard: false
+  //   });
+  //   this.modalManager.register(this);
+  // }
+  //
+  // show() {
+  //   this.modalInstance.show();
+  // }
+  //
+  // hide() {
+  //   this.modalInstance.hide();
+  // }
 }

@@ -5,6 +5,8 @@ import {MainPageComponent} from "./main-page/main-page.component";
 import {CreateRestaurantComponent} from "./create-restaurant/create-restaurant.component";
 import {RestaurantPageComponent} from "./restaurant-page/restaurant-page.component";
 import {TestCompComponent} from "./test-comp/test-comp.component";
+import {LoginPageComponent} from "./authentication/login-page/login-page.component";
+import {RegisterPageComponent} from "./authentication/register-page/register-page.component";
 
 const routes: Routes = [
 
@@ -28,6 +30,14 @@ const routes: Routes = [
   {
     path: 'testing',
     component: TestCompComponent
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent
+  },
+  {
+    path: 'register',
+    component: RegisterPageComponent
   }
 ];
 

@@ -118,7 +118,7 @@
 
 <div *ngIf="foodListByCategory.length > 0" class="food-card-container">
   <div *ngFor="let foodItem of foodListByCategory" class="food-card">
-    <!--    <img ngSrc="./assets/default_restaurant_image.jpg" alt="{{ foodItem.name }}" class="food-image" fill>-->
+<!--        <img ngSrc="./assets/italian.jpg" alt="{{ foodItem.name }}" class="food-image" fill>-->
     <div class="food-info">
       <!--      <span class="food-tag">#1 most liked</span>-->
       <h2 class="food-name">{{ foodItem.name }}</h2>
@@ -126,10 +126,75 @@
         more and more description is being written
       </p>
       <p class="food-price">{{ foodItem.lowestPrice }} zł</p>
-      <button type="button" class="btn btn-add" (click)="openMenuItemModal()">+</button>
+<!--      <button type="button" class="btn btn-add" data-bs-target="foodModal" (click)="fetchCustomMenuItemResponse(foodItem.menuItemId)">+</button>-->
+      <button type="button" class="btn btn-add" data-bs-toggle="modal"  data-bs-target="#exampleModal" (click)="fetchCustomMenuItemResponse(foodItem.menuItemId)">+</button>
     </div>
   </div>
 </div>
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" *ngIf="customMenuItem">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalId">{{customMenuItem.name}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Favorite sauce section -->
+        <div class="modal-section">
+          <p class="modal-section-title">Choose your favorite size</p>
+
+          <div *ngFor="let size of customMenuItem.sizesWithPrices | objectToArray; let i = index">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="favSauce" [id]="'size'+i" [value]="size.key"
+                     (change)="updateSelectedSize(size.key)">
+              <label class="form-check-label" [for]="'size'+i">{{ size.key }} (+ {{ size.value }} PLN)</label>
+            </div>
+          </div>
+
+        </div>
+
+        <div *ngFor="let additive of customMenuItem.foodAdditivePrices | objectToArray; let i = index">
+          <div class="form-check">
+            <input class="form-check-input" #checkBox type="checkbox" name="favSauce" [id]="'sos'+i" [value]="additive.key"
+                   (change)="updateAdditives(additive.key, checkBox.checked)">
+            <label class="form-check-label" [for]="'sos'+i">{{ additive.key }} (+ {{ additive.value }} PLN)</label>
+          </div>
+        </div>
+
+
+
+
+
+        <!-- Special instructions section -->
+        <div class="modal-section">
+          <p class="modal-section-title">Special instructions</p>
+          <textarea class="form-control" placeholder="Add a note"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- Quantity selector -->
+        <div class="quantity-selector d-flex align-items-center">
+          <label for="quantity" class="me-2">Quantity:</label>
+          <select class="form-select"  id="quantity" [(ngModel)]="currentMenuItemModel.quantity"  style="width: auto;">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <!-- Add more options as needed -->
+          </select>
+        </div>
+        <!-- Order button -->
+        <button type="button" class="btn btn-primary" (click)="updateOrder(customMenuItem.menuItemId)">Add 1 to order • PLN 24.00</button>
+        <!-- See details link -->
+        <button type="button" class="btn btn-link">See details</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="spacer"></div>
 

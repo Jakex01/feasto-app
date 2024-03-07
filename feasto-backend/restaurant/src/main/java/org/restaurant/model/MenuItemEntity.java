@@ -29,7 +29,7 @@ public class MenuItemEntity {
     @CollectionTable(name = "menu_item_food_additives", joinColumns = @JoinColumn(name = "menu_item_id"))
     @MapKeyColumn(name = "food_additive")
     @Column(name = "price")
-    @Enumerated(EnumType.STRING)
+    @MapKeyEnumerated(EnumType.STRING)
     private Map<FoodAdditive, Double> foodAdditivePrices = new HashMap<>();
 
     @ElementCollection

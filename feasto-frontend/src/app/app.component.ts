@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {RouterOutlet} from "@angular/router";
+import {NavigationEnd, Router, RouterOutlet} from "@angular/router";
+import {filter} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -12,4 +13,14 @@ export class AppComponent {
   prepareRoute(outlet: RouterOutlet): string | undefined {
     return outlet.activatedRouteData['animation'] as string;
   }
+  showNavbar = true;
+
+  constructor(private router: Router) {
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.showNavbar = !event.urlAfterRedirects.startsWith('/login');
+    });
+  }
+
 }

@@ -13,6 +13,7 @@ import {TestCompComponent} from "./test-comp/test-comp.component";
 import {RestaurantsListComponent} from "./restaurants-list/restaurants-list.component";
 import {MainPageComponent} from "./main-page/main-page.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {ObjectToArrayPipe} from "./pipes/ObjectToArrayPipe";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     RestaurantsListComponent,
     TestCompComponent,
     CreateRestaurantComponent,
+    ObjectToArrayPipe,
     RestaurantPageComponent,
   ],
   imports: [

@@ -6,29 +6,43 @@ import {RatingResponse} from "../model/response/RatingResponse";
 import {RatingService} from "../service/rating-service/rating.service";
 import {MenuItemResponse} from "../model/response/MenuItemResponse";
 import {ModalManagerService} from "../service/modal-service/modal-manager.service";
+import {MenuItemService} from "../service/menu-item/menu-item.service";
+import {CustomMenuItemResponse} from "../model/response/CustomMenuItemResponse";
+import {MenuItemOrderModel} from "../model/MenuItemOrderModel";
+import {OrderRequest} from "../model/request/OrderRequest";
 @Component({
   selector: 'app-restaurant-page',
   templateUrl: './restaurant-page.component.html',
   styleUrls: ['./restaurant-page.component.css'],
 })
 export class RestaurantPageComponent implements OnInit{
-  @ViewChild('nextSection') nextSection: ElementRef;
-  categories = ['Popularne', 'Śniadania', 'Kanapki', 'Obiady', 'Kolacja'];
-  heartStates: boolean[] = [false, false, false];
-  stars: string[] = [];
-  restaurant: RestaurantResponse;
-  id: number;
-  isCommentVisible = false;
-  ratingResponse: RatingResponse;
-   uniqueFoodCategoriesSet = new Set<String>();
-    foodListByCategory: MenuItemResponse[] = [];
+    @ViewChild('nextSection') nextSection: ElementRef;
 
-   CommentsByRestaurant: RatingResponse[] = [];
+    heartStates: boolean[] = [false, false, false];
+    stars: string[] = [];
+    restaurant: RestaurantResponse;
+    id: number;
+    isCommentVisible = false;
+    ratingResponse: RatingResponse;
+    uniqueFoodCategoriesSet = new Set<String>();
+    foodListByCategory: MenuItemResponse[] = [];
+    customMenuItem: CustomMenuItemResponse;
+    CommentsByRestaurant: RatingResponse[] = [];
+    menuItemOrderModel: MenuItemOrderModel[] = [];
+    orderRequest: OrderRequest;
+    currentMenuItemModel: MenuItemOrderModel = {
+      menuItemId: 0,
+      foodAdditivePrices: {},
+      selectedSize: { size: '', price: 0 },
+      generalPrice: 0,
+      quantity: 1
+    };
 
   constructor(private restaurantService: RestaurantService,
               private route: ActivatedRoute,
               private ratingService: RatingService,
-              private modalManager: ModalManagerService
+              private modalManager: ModalManagerService,
+              private menuItemService: MenuItemService
               ) {
   }
   ngOnInit(): void {
@@ -128,7 +142,7 @@ export class RestaurantPageComponent implements OnInit{
       .subscribe({
         next: (rating) => {
           this.ratingResponse = rating;
-
+          console.log(rating);
         },
         error: (err) => {
           console.error('Failed to load average rating:', err);
@@ -152,9 +166,54 @@ export class RestaurantPageComponent implements OnInit{
       });
     }
     }
-
-  openMenuItemModal() {
-    this.modalManager.open();
+  fetchCustomMenuItemResponse(menuItemId: number){
+    this.menuItemService.getCustomMenuItem(menuItemId)
+      .subscribe({
+        next:(menuItem)=>{
+          this.customMenuItem = menuItem;
+          console.log(menuItem);
+        },
+        error:(err)=>{
+          console.error('Failed to load menu item:', err);
+        }
+      })
   }
+
+  updateSelectedSize(sizeKey: string) {
+    const price = this.customMenuItem.sizesWithPrices[sizeKey];
+    this.currentMenuItemModel.selectedSize = { size: sizeKey, price };
+    this.calculateGeneralPrice();
+  }
+
+  updateAdditives(additiveKey: string, isChecked: boolean) {
+    if (isChecked) {
+      const price = this.customMenuItem.foodAdditivePrices[additiveKey];
+      this.currentMenuItemModel.foodAdditivePrices[additiveKey] = price;
+    } else {
+      delete this.currentMenuItemModel.foodAdditivePrices[additiveKey];
+    }
+    this.calculateGeneralPrice();
+  }
+  calculateGeneralPrice() {
+    let price = this.currentMenuItemModel.selectedSize.price;
+    Object.values(this.currentMenuItemModel.foodAdditivePrices).forEach(additivePrice => {
+      price += additivePrice;
+    });
+
+    this.currentMenuItemModel.generalPrice = price * this.currentMenuItemModel.quantity;
+  }
+
+  updateOrder(menuItemId: number){
+    this.currentMenuItemModel.menuItemId = menuItemId;
+    this.orderRequest.items.push(this.currentMenuItemModel);
+  }
+  passOrder(){
+    this.orderRequest.items.push(this.currentMenuItemModel);
+  }
+
+
+  // openMenuItemModal() {
+  //   this.modalManager.open();
+  // }
 
 }
