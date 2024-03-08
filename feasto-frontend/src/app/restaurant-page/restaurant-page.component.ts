@@ -5,11 +5,11 @@ import {ActivatedRoute} from "@angular/router";
 import {RatingResponse} from "../model/response/RatingResponse";
 import {RatingService} from "../service/rating-service/rating.service";
 import {MenuItemResponse} from "../model/response/MenuItemResponse";
-import {ModalManagerService} from "../service/modal-service/modal-manager.service";
 import {MenuItemService} from "../service/menu-item/menu-item.service";
 import {CustomMenuItemResponse} from "../model/response/CustomMenuItemResponse";
 import {MenuItemOrderModel} from "../model/MenuItemOrderModel";
 import {OrderRequest} from "../model/request/OrderRequest";
+import {CurrentMenuItemService} from "../service/currentMenuItem-service/current-menu-item.service";
 @Component({
   selector: 'app-restaurant-page',
   templateUrl: './restaurant-page.component.html',
@@ -28,8 +28,11 @@ export class RestaurantPageComponent implements OnInit{
     foodListByCategory: MenuItemResponse[] = [];
     customMenuItem: CustomMenuItemResponse;
     CommentsByRestaurant: RatingResponse[] = [];
-    menuItemOrderModel: MenuItemOrderModel[] = [];
-    orderRequest: OrderRequest;
+    orderRequest: OrderRequest = {
+      items: [],
+      totalPrice: 0,
+      restaurantId: 0
+    };
     currentMenuItemModel: MenuItemOrderModel = {
       menuItemId: 0,
       foodAdditivePrices: {},
@@ -41,8 +44,8 @@ export class RestaurantPageComponent implements OnInit{
   constructor(private restaurantService: RestaurantService,
               private route: ActivatedRoute,
               private ratingService: RatingService,
-              private modalManager: ModalManagerService,
-              private menuItemService: MenuItemService
+              private menuItemService: MenuItemService,
+              private currentMenuItemService: CurrentMenuItemService
               ) {
   }
   ngOnInit(): void {
@@ -54,12 +57,19 @@ export class RestaurantPageComponent implements OnInit{
         this.restaurant = response;
         this.updateStars(this.restaurant.rating);
         this.selectFoodCategories();
+        this.orderRequest.restaurantId = this.id;
+        console.log(this.id);
       },
       error: (error) => {
         console.error('Error fetching restaurants:', error);
       },
     });
   }
+
+  changeMenuItem(item: MenuItemOrderModel) {
+    this.currentMenuItemService.changeMenuItem(item);
+  }
+
   selectFoodCategories(){
     this.restaurant.menuItems.forEach((menuItem: MenuItemResponse)=>{
       if(!this.uniqueFoodCategoriesSet.has(menuItem.category)){
@@ -206,14 +216,16 @@ export class RestaurantPageComponent implements OnInit{
   updateOrder(menuItemId: number){
     this.currentMenuItemModel.menuItemId = menuItemId;
     this.orderRequest.items.push(this.currentMenuItemModel);
-  }
-  passOrder(){
-    this.orderRequest.items.push(this.currentMenuItemModel);
+    this.orderRequest.totalPrice += this.currentMenuItemModel.generalPrice;
+
+    this.currentMenuItemModel.menuItemId = 0;
+    this.currentMenuItemModel.foodAdditivePrices = {};
+    this.currentMenuItemModel.selectedSize = { size: '', price: 0 };
+    this.currentMenuItemModel.generalPrice = 0;
+    this.currentMenuItemModel.quantity = 1;
+    console.log(this.currentMenuItemModel);
+    this.changeMenuItem(this.currentMenuItemModel);
   }
 
-
-  // openMenuItemModal() {
-  //   this.modalManager.open();
-  // }
 
 }
