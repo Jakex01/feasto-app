@@ -22,6 +22,7 @@
         <module>api-gateway</module>
         <module>google-places-api</module>
         <module>notification</module>
+        <module>payments</module>
     </modules>
 	<properties>
 		<java.version>17</java.version>
