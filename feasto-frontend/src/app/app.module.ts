@@ -14,6 +14,7 @@ import {RestaurantsListComponent} from "./restaurants-list/restaurants-list.comp
 import {MainPageComponent} from "./main-page/main-page.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ObjectToArrayPipe} from "./pipes/ObjectToArrayPipe";
+import {OrderCheckoutPageComponent} from "./order-checkout-page/order-checkout-page.component";
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {ObjectToArrayPipe} from "./pipes/ObjectToArrayPipe";
     NgbModule,
     ReactiveFormsModule,
     NgOptimizedImage,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

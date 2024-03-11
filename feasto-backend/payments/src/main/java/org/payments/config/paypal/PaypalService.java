@@ -51,6 +51,8 @@ public class PaypalService {
         redirectUrls.setReturnUrl(successUrl);
         payment.setRedirectUrls(redirectUrls);
 
+
+
         return payment.create(apiContext);
 
     }
@@ -60,7 +62,7 @@ public class PaypalService {
     ) throws PayPalRESTException {
         Payment payment = new Payment();
         payment.setId(paymentId);
-
+        System.out.println("success 3");
         PaymentExecution paymentExecution = new PaymentExecution();
         paymentExecution.setPayerId(payerId);
 

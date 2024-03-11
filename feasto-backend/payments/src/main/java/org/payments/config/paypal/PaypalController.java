@@ -5,17 +5,16 @@ import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin
 public class PaypalController {
-
+    // w sukcesie trzeba zmienić protokół z https -> http
     private final PaypalService paypalService;
 
     @GetMapping("/")
@@ -24,17 +23,21 @@ public class PaypalController {
     }
 
     @PostMapping("/payment/create")
-    public RedirectView createPayment(){
+    public RedirectView createPayment(
+//            @RequestBody PaymentRequest paymentRequest
+            ){
+
         try{
-            String cancelUrl = "https://localhost:8080/payment/cancel";
-            String successUrl = "https://localhost:8080/payment/success";
+
+            String cancelUrl = "https://localhost:8081/payment/cancel";
+            String successUrl = "https://localhost:8081/payment/success";
 
             Payment payment = paypalService.createPayment(
                     10.0,
                     "USD",
                     "paypal",
                     "sale",
-                    "Payment description",
+                    "payment",
                     cancelUrl,
                     successUrl
             );
@@ -54,11 +57,11 @@ public class PaypalController {
     @GetMapping("/payment/success")
     public String paymentSuccess(
             @RequestParam("paymentId") String paymentId,
-            @RequestParam("payerId") String payerId
+            @RequestParam("PayerID") String payerId
     ){
-
+        System.out.println("success 1");
         try{
-
+            System.out.println("success 2");
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if(payment.getState().equals("approved")){
                 return "paymentSuccess";

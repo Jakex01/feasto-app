@@ -16,6 +16,10 @@ public class PaypalConfig {
 
     @Bean
     public APIContext apiContext(){
+
+        System.out.println("clientId: " + clientId + " clientSecret: "+ clientSecret);
         return new APIContext(clientId, clientSecret, mode);
     }
+
+
 }

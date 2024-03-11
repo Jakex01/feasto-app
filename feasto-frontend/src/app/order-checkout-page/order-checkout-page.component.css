@@ -60,6 +60,10 @@ p {
   transition: opacity 0.3s ease; /* Smooth transition for hover effect */
   width: 26rem;
 }
+.btn-payment-method.active {
+  background-color: blue;
+  color: white;
+}
 
 .btn-paypal:hover {
   opacity: 0.7;

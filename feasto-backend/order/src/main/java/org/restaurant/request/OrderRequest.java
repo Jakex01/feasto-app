@@ -1,9 +1,13 @@
 package org.restaurant.request;
 
 
+import org.restaurant.model.MenuItemOrder;
+
 import java.util.List;
 
 public record OrderRequest(
-        List<OrderLineItemRequest> orderLineItems
+        List<MenuItemOrderRequest> items,
+        Double totalPrice,
+        Long restaurantId
 ) {
 }

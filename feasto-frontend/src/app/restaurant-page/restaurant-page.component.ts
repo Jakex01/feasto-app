@@ -10,6 +10,9 @@ import {CustomMenuItemResponse} from "../model/response/CustomMenuItemResponse";
 import {MenuItemOrderModel} from "../model/MenuItemOrderModel";
 import {OrderRequest} from "../model/request/OrderRequest";
 import {CurrentMenuItemService} from "../service/currentMenuItem-service/current-menu-item.service";
+import {ModalService} from "../shared/restaurant-page-modal/modal.service";
+import {Modal} from "bootstrap";
+import {TestCompComponent} from "../test-comp/test-comp.component";
 @Component({
   selector: 'app-restaurant-page',
   templateUrl: './restaurant-page.component.html',
@@ -17,6 +20,16 @@ import {CurrentMenuItemService} from "../service/currentMenuItem-service/current
 })
 export class RestaurantPageComponent implements OnInit{
     @ViewChild('nextSection') nextSection: ElementRef;
+
+    @ViewChild(TestCompComponent) child!: TestCompComponent;
+
+
+  passDataToChild(menuItemId: number): void {
+    this.fetchCustomMenuItemResponse(menuItemId);
+    this.child.showModal();
+
+  }
+
 
     heartStates: boolean[] = [false, false, false];
     stars: string[] = [];
@@ -26,26 +39,17 @@ export class RestaurantPageComponent implements OnInit{
     ratingResponse: RatingResponse;
     uniqueFoodCategoriesSet = new Set<String>();
     foodListByCategory: MenuItemResponse[] = [];
-    customMenuItem: CustomMenuItemResponse;
     CommentsByRestaurant: RatingResponse[] = [];
     orderRequest: OrderRequest = {
       items: [],
       totalPrice: 0,
       restaurantId: 0
     };
-    currentMenuItemModel: MenuItemOrderModel = {
-      menuItemId: 0,
-      foodAdditivePrices: {},
-      selectedSize: { size: '', price: 0 },
-      generalPrice: 0,
-      quantity: 1
-    };
 
   constructor(private restaurantService: RestaurantService,
               private route: ActivatedRoute,
               private ratingService: RatingService,
               private menuItemService: MenuItemService,
-              private currentMenuItemService: CurrentMenuItemService
               ) {
   }
   ngOnInit(): void {
@@ -58,7 +62,6 @@ export class RestaurantPageComponent implements OnInit{
         this.updateStars(this.restaurant.rating);
         this.selectFoodCategories();
         this.orderRequest.restaurantId = this.id;
-        console.log(this.id);
       },
       error: (error) => {
         console.error('Error fetching restaurants:', error);
@@ -66,10 +69,11 @@ export class RestaurantPageComponent implements OnInit{
     });
   }
 
-  changeMenuItem(item: MenuItemOrderModel) {
-    this.currentMenuItemService.changeMenuItem(item);
+  receiveOrderFromChild(menuItemOrder: MenuItemOrderModel): void {
+   this.orderRequest.items.push(menuItemOrder);
+   this.orderRequest.totalPrice += menuItemOrder.generalPrice;
+   console.log(this.orderRequest);
   }
-
   selectFoodCategories(){
     this.restaurant.menuItems.forEach((menuItem: MenuItemResponse)=>{
       if(!this.uniqueFoodCategoriesSet.has(menuItem.category)){
@@ -180,7 +184,7 @@ export class RestaurantPageComponent implements OnInit{
     this.menuItemService.getCustomMenuItem(menuItemId)
       .subscribe({
         next:(menuItem)=>{
-          this.customMenuItem = menuItem;
+          this.child.customMenuItem = menuItem;
           console.log(menuItem);
         },
         error:(err)=>{
@@ -189,43 +193,7 @@ export class RestaurantPageComponent implements OnInit{
       })
   }
 
-  updateSelectedSize(sizeKey: string) {
-    const price = this.customMenuItem.sizesWithPrices[sizeKey];
-    this.currentMenuItemModel.selectedSize = { size: sizeKey, price };
-    this.calculateGeneralPrice();
-  }
 
-  updateAdditives(additiveKey: string, isChecked: boolean) {
-    if (isChecked) {
-      const price = this.customMenuItem.foodAdditivePrices[additiveKey];
-      this.currentMenuItemModel.foodAdditivePrices[additiveKey] = price;
-    } else {
-      delete this.currentMenuItemModel.foodAdditivePrices[additiveKey];
-    }
-    this.calculateGeneralPrice();
-  }
-  calculateGeneralPrice() {
-    let price = this.currentMenuItemModel.selectedSize.price;
-    Object.values(this.currentMenuItemModel.foodAdditivePrices).forEach(additivePrice => {
-      price += additivePrice;
-    });
-
-    this.currentMenuItemModel.generalPrice = price * this.currentMenuItemModel.quantity;
-  }
-
-  updateOrder(menuItemId: number){
-    this.currentMenuItemModel.menuItemId = menuItemId;
-    this.orderRequest.items.push(this.currentMenuItemModel);
-    this.orderRequest.totalPrice += this.currentMenuItemModel.generalPrice;
-
-    this.currentMenuItemModel.menuItemId = 0;
-    this.currentMenuItemModel.foodAdditivePrices = {};
-    this.currentMenuItemModel.selectedSize = { size: '', price: 0 };
-    this.currentMenuItemModel.generalPrice = 0;
-    this.currentMenuItemModel.quantity = 1;
-    console.log(this.currentMenuItemModel);
-    this.changeMenuItem(this.currentMenuItemModel);
-  }
 
 
 }

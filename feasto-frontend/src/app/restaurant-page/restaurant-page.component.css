@@ -94,7 +94,7 @@
 
 .scroll-down-btn {
   margin-top: 2.5rem;
-  animation: bounce 2s infinite; /* Apply the bounce animation to the whole button if desired */
+  animation: bounce 2s infinite;
 }
 
 .icon-scroll-down-btn {
@@ -393,12 +393,12 @@
 
 .scroll-down-btn {
   margin-top: 2.5rem;
-  animation: bounce 2s infinite; /* Apply the bounce animation to the whole button if desired */
+  animation: bounce 2s infinite;
 }
 
 .icon-scroll-down-btn {
   font-size: 3.5rem;
-  animation: bounce 2s infinite; /* Or apply specifically to the icon for the bounce effect */
+  animation: bounce 2s infinite;
 }
 
 
@@ -721,17 +721,6 @@
 .spacer {
   height: 30rem;
 }
-
-
-
-
-
-
-
-
-
-/* You might want to add media queries for responsiveness */
-
 
 .modal-content {
   font-family: 'Roboto', sans-serif;
