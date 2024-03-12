@@ -19,32 +19,56 @@ export class OrderCheckoutPageComponent implements OnInit{
   paymentRequest: PaymentRequest;
   selectedPaymentMethod: string = '';
   private subscription: Subscription;
-
+  paymentMethodSelected: boolean = false;
   selectPaymentMethod(method: string) {
+
     this.selectedPaymentMethod = method;
+  }
+  forwardToSummary(){
+    this.paymentMethodSelected = true;
   }
   constructor(private paymentService: PaymentService,
               private sharedDataService: SharedDataService) {
   }
-  finalOrderRequest: OrderRequest  | null= {
-    items: [],
+  finalOrderRequest: OrderRequest | null = {
+    items: [{
+      menuItemId: 0,
+      name: '',
+      description: '',
+      available: true,
+      category: '',
+      foodAdditivePrices: {},
+      selectedSize: { size: '', price: 0 },
+      generalPrice: 0,
+      quantity: 1,
+      note: ''
+    }],
     totalPrice: 0,
     restaurantId: 0,
     orderNote: ''
   };
+
+  foodAdditivePricesArray: {name: string, price: number}[];
   ngOnInit(): void {
         this.subscription = this.sharedDataService.currentOrderRequest$.subscribe((order)=>{
           this.finalOrderRequest = order;
+          if(this.finalOrderRequest){
+          this.finalOrderRequest.items.forEach(item => {
+            this.foodAdditivePricesArray = Object.entries(item.foodAdditivePrices).map(([name, price]) => ({
+              name, price
+            }));
+          });
+          }
         })
     }
 
   placeOrder(){
     console.log("here")
     const paymentRequest = {
-      amount: "10.00",
-      currency: "USD",
+      amount: this.finalOrderRequest?.totalPrice,
+      currency: "PLN",
       method: "paypal",
-      description: "Payment description"
+      description: "Payment"
     };
     this.selectPaymentMethod('paypal');
 
@@ -59,5 +83,8 @@ export class OrderCheckoutPageComponent implements OnInit{
       });
     }
   }
+
+
+
 
 }

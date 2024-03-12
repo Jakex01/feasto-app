@@ -13,7 +13,7 @@
 
 .card-header {
   background-color: var(--primary-color);
-  color: white;
+  color: black;
   font-size: calc(var(--font-size-base) * 2);
 }
 
@@ -66,8 +66,11 @@ p {
 }
 
 .btn-paypal:hover {
-  opacity: 0.7;
+  background-color: #007bff; /* Bootstrap primary color, for example */
+  color: white; /* Change text color to white */
+  opacity: 1; /* Reset opacity if you want the button to remain fully opaque */
 }
+
 
 .custom-card {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
@@ -104,4 +107,18 @@ p {
   .custom-card {
     max-width: 100%; /* Full width on smaller screens */
   }
+}
+
+
+.btn-back{
+  background-color: transparent; /* Bez tła */
+  border: none; /* Brak obramowania */
+  color: #333; /* Kolor tekstu, dostosuj według potrzeb */
+  cursor: pointer; /* Styl kursora jak dla przycisku */
+  padding: 5px; /* Wewnętrzny odstęp, dostosuj według potrzeb */
+  font-size: 2em; /* Wielkość czcionki, dostosuj według potrzeb */
+  position: fixed;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
 }

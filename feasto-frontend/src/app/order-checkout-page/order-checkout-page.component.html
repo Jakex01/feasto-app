@@ -1,4 +1,4 @@
-<div class="container  d-flex align-items-center justify-content-center">
+<div class="container  d-flex align-items-center justify-content-center" *ngIf="!paymentMethodSelected">
 
   <div class="row w-100 gx-5">
 
@@ -13,15 +13,6 @@
         </div>
       </div>
 
-      <div class="card mb-3">
-        <div class="card-header">Payment</div>
-      <div class="card-body">
-        <button class="btn btn-paypal" (click)="selectPaymentMethod('paypal')">PAYPAL</button>
-        <button class="btn btn-paypal" (click)="selectPaymentMethod('cash')">CASH</button>
-        <button class="btn btn-paypal" (click)="selectPaymentMethod('feasto-cash')">FEASTO CASH</button>
-      </div>
-
-    </div>
 
 
     </div>
@@ -29,29 +20,49 @@
 
     <div class="col-md-6">
 
-      <div class="card mb-3">
+      <div class="card mb-3" *ngIf="finalOrderRequest">
         <div class="card-header">Order summary</div>
         <div class="card-body">
-          <p>5 items</p>
-          <div class="mt-3">Zapiekanka ale Uwra!</div>
-          <small class="text-muted">Wybierz swój ulubiony rozmiar: Cała (30 cm) PLN 5.50</small>
-          <div class="mt-3">Zapiekanka ale Uwra!</div>
-          <small class="text-muted">Wybierz swój ulubiony rozmiar: Cała (30 cm) PLN 5.50</small>
-          <div class="mt-3">Zapiekanka ale Uwra!</div>
-          <small class="text-muted">Wybierz swój ulubiony rozmiar: Cała (30 cm) PLN 5.50</small>
-          <div class="mt-3">Zapiekanka ale Uwra!</div>
-          <small class="text-muted">Wybierz swój ulubiony rozmiar: Cała (30 cm) PLN 5.50</small>
-
+          <p>Items: {{finalOrderRequest.items.length}}</p>
+          <div *ngFor="let item of finalOrderRequest.items" class="mt-3">
+            <div>{{item.name}}</div>
+            <small class="text-muted"> Size: {{item.selectedSize.size}} - PLN {{item.selectedSize.price}}</small>
+            <br>
+            <small class="text-muted"> Additives:</small>
+            <br>
+            <div *ngFor="let additive of foodAdditivePricesArray">
+              <small class="text-muted">{{ additive.name }} - PLN {{ additive.price }}</small>
+              <br>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
+
+    <div class="card mt-1">
+      <div class="card-header">Payment</div>
+      <div class="card-body d-flex flex-column align-items-center justify-content-center">
+        <button class="btn btn-paypal" (click)="selectPaymentMethod('paypal')">PAYPAL</button>
+        <button class="btn btn-paypal" (click)="selectPaymentMethod('cash')">CASH</button>
+<!--        <button class="btn btn-paypal" (click)="selectPaymentMethod('feasto-cash')">FEASTO CASH</button>-->
+      </div>
+
+    </div>
+
+    <div class="d-flex mt-5 align-items-center justify-content-center">
+      <button class="btn btn-primary w-25" (click)="forwardToSummary()">Summary</button>
+    </div>
+
+
   </div>
+
 
 
 </div>
 
 
-<div class="container mt-5 d-flex align-items-center justify-content-center">
+<div class="container mt-5 d-flex align-items-center justify-content-center" *ngIf="paymentMethodSelected">
   <div class="card custom-card">
 
     <div class="card-body">
@@ -86,6 +97,11 @@
 
       <button class="btn btn-success custom-order-button mt-3" (click)="placeOrder()">Place Your Order</button>
     </div>
+
+  </div>
+
+  <div class="d-flex align-items-start mb-4">
+    <button type="button" (click)="paymentMethodSelected = false" class=" btn btn-secondary btn-back">  &lt;&lt; </button>
   </div>
 </div>
 

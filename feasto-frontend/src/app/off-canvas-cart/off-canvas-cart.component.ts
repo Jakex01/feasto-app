@@ -6,6 +6,7 @@ import {OrderRequest} from "../model/request/OrderRequest";
 import {MenuItemOrderModel} from "../model/MenuItemOrderModel";
 import {Subscription} from "rxjs";
 import {SharedDataService} from "../service/shared-data/shared-data.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-off-canvas-cart',
@@ -44,7 +45,8 @@ export class OffCanvasCartComponent implements OnInit{
     orderNote: ''
   };
 
-  constructor(private sharedDataService: SharedDataService) {}
+  constructor(private sharedDataService: SharedDataService,
+              private router: Router) {}
   ngOnInit(): void {
     this.subscription = this.sharedDataService.currentMenuItemOrder$.subscribe((order) => {
       this.menuItemOrder = order;
@@ -69,7 +71,9 @@ export class OffCanvasCartComponent implements OnInit{
 
   }
   sendOrderRequestToCheckout(){
+    console.log("Sending data");
     this.sharedDataService.updateCheckOutOrder(this.orderRequest);
+    this.router.navigate(['/checkout']);
   }
 
 
