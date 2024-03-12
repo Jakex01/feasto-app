@@ -4,4 +4,5 @@ export interface OrderRequest{
   items: MenuItemOrderModel[];
   totalPrice: number;
   restaurantId: number;
+  orderNote: string;
 }

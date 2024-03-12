@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {RestaurantService} from "../service/restaurant-service/restaurant.service";
 import {RestaurantResponse} from "../model/response/RestaurantResponse";
 import {ActivatedRoute} from "@angular/router";
@@ -33,18 +33,31 @@ export class RestaurantPageComponent implements OnInit{
 
     heartStates: boolean[] = [false, false, false];
     stars: string[] = [];
-    restaurant: RestaurantResponse;
+   restaurant: RestaurantResponse = {
+    restaurantId: 0,
+    name: '',
+    description: '',
+    phoneNumber: '',
+    openingHours: '',
+    rating: 0,
+    foodType: '',
+    image: '',
+    createDate: '',
+    locations: [],
+    menuItems: [],
+    commentsCount: 0
+  };
     id: number;
     isCommentVisible = false;
     ratingResponse: RatingResponse;
     uniqueFoodCategoriesSet = new Set<String>();
     foodListByCategory: MenuItemResponse[] = [];
     CommentsByRestaurant: RatingResponse[] = [];
-    orderRequest: OrderRequest = {
-      items: [],
-      totalPrice: 0,
-      restaurantId: 0
-    };
+    // orderRequest: OrderRequest = {
+    //   items: [],
+    //   totalPrice: 0,
+    //   restaurantId: 0
+    // };
 
   constructor(private restaurantService: RestaurantService,
               private route: ActivatedRoute,
@@ -61,7 +74,7 @@ export class RestaurantPageComponent implements OnInit{
         this.restaurant = response;
         this.updateStars(this.restaurant.rating);
         this.selectFoodCategories();
-        this.orderRequest.restaurantId = this.id;
+        // this.orderRequest.restaurantId = this.id;
       },
       error: (error) => {
         console.error('Error fetching restaurants:', error);
@@ -69,11 +82,11 @@ export class RestaurantPageComponent implements OnInit{
     });
   }
 
-  receiveOrderFromChild(menuItemOrder: MenuItemOrderModel): void {
-   this.orderRequest.items.push(menuItemOrder);
-   this.orderRequest.totalPrice += menuItemOrder.generalPrice;
-   console.log(this.orderRequest);
-  }
+  // receiveOrderFromChild(menuItemOrder: MenuItemOrderModel): void {
+  //  this.orderRequest.items.push(menuItemOrder);
+  //  this.orderRequest.totalPrice += menuItemOrder.generalPrice;
+  //  console.log(this.orderRequest);
+  // }
   selectFoodCategories(){
     this.restaurant.menuItems.forEach((menuItem: MenuItemResponse)=>{
       if(!this.uniqueFoodCategoriesSet.has(menuItem.category)){

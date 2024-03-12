@@ -15,6 +15,7 @@ import {MainPageComponent} from "./main-page/main-page.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ObjectToArrayPipe} from "./pipes/ObjectToArrayPipe";
 import {OrderCheckoutPageComponent} from "./order-checkout-page/order-checkout-page.component";
+import {OffCanvasCartComponent} from "./off-canvas-cart/off-canvas-cart.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {OrderCheckoutPageComponent} from "./order-checkout-page/order-checkout-p
     NgbModule,
     ReactiveFormsModule,
     NgOptimizedImage,
+    OffCanvasCartComponent,
 
   ],
   providers: [],

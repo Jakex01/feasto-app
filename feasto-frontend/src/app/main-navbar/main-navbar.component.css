@@ -79,11 +79,11 @@
   margin-right: 0.5rem;
 }
 
-/* Jeśli chcesz, możesz dodać niestandardowy styl dla badge z liczbą produktów */
+
 .navbar-cart .badge {
   padding: 0.25em 0.6em;
 }
-/* Zmniejszenie zaokrąglenia przycisku koszyka */
+
 .navbar-cart .btn {
   padding: 0.5rem 1rem; /* Powiększenie przycisku poprzez zwiększenie paddingu */
   font-size: 1.2rem; /* Zwiększenie rozmiaru tekstu w przycisku */

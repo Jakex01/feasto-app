@@ -1,19 +1,29 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CustomMenuItemResponse} from "../model/response/CustomMenuItemResponse";
 import {MenuItemOrderModel} from "../model/MenuItemOrderModel";
+import {SharedDataService} from "../service/shared-data/shared-data.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-test-comp',
   templateUrl: './test-comp.component.html',
   styleUrls: ['./test-comp.component.css']
 })
-export class TestCompComponent {
+export class TestCompComponent implements OnInit{
 
   @ViewChild('modal') modal:ElementRef;
 
   @Output() sendOrderToParent: EventEmitter<MenuItemOrderModel> = new EventEmitter();
+  restaurantId: number | null = null;
+  constructor(private sharedDataService: SharedDataService,
+              private route: ActivatedRoute) {}
 
-
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('restaurantId');
+      this.restaurantId = id ? +id : null;
+    });
+    }
   customMenuItem: CustomMenuItemResponse;
   selectedSizeKey: string;
 
@@ -65,7 +75,9 @@ export class TestCompComponent {
     this.menuItemOrder.category = this.customMenuItem.category;
     this.menuItemOrder.description = this.customMenuItem.description;
     this.menuItemOrder.available = this.customMenuItem.available;
-    this.sendOrderToParent.emit(this.menuItemOrder);
+
+      this.sharedDataService.updateMenuItemOrder(this.menuItemOrder);
+
     this.closeModal();
   }
 
