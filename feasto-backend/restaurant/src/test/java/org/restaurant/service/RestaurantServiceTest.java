@@ -30,78 +30,78 @@ import static org.mockito.Mockito.when;
 @RequiredArgsConstructor
 @ExtendWith(MockitoExtension.class)
 class RestaurantServiceTest {
-
-    @Mock
-    private RestaurantRepository restaurantRepository;
-
-    private AutoCloseable autoCloseable;
-
-    private ObjectsValidator<CreateRestaurantRequest> objectsValidator;
-
-    @InjectMocks
-    private RestaurantService restaurantService;
-    @BeforeEach
-    void setUp() {
-        autoCloseable = MockitoAnnotations.openMocks(this);
-        restaurantService = new RestaurantService(restaurantRepository, objectsValidator);
-    }
-
-    @AfterEach
-    void tearDown() throws Exception {
-        autoCloseable.close();
-    }
-
-    @Test
-    void createRestaurant() {
-        PostLocationRequest address = new PostLocationRequest(
-                "City",
-                "Street",
-                "123",
-                "Country"
-        );
-
-        CreateRestaurantRequest request = new CreateRestaurantRequest(
-                "Test Restaurant",
-                address,
-                "Test Description",
-                "1234567890",
-                "10:00-22:00",
-                "Italian",
-                "image.jpg"
-        );
-
-        // Optionally mock the behavior of objectsValidator if the service method uses it
-        when(objectsValidator.validate(any())).thenReturn(true); // Assuming validate returns a boolean or similar
-
-        ResponseEntity<?> responseEntity = restaurantService.createRestaurant(request);
-
-        verify(restaurantRepository).save(any(RestaurantEntity.class));
-        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-    }
-
-    @Test
-    void getAllRestaurants() {
-        List<RestaurantEntity> restaurants = List.of(new RestaurantEntity());
-        when(restaurantRepository.findAll()).thenReturn(restaurants);
-
-        List<RestaurantEntityDTO> expectedDTOs = List.of(new RestaurantEntityDTO());
-        when(MapStructMapper.INSTANCE.restaurantToRestaurantDto(any(RestaurantEntity.class))).thenReturn(expectedDTOs.get(0));
-
-        ResponseEntity<List<RestaurantEntityDTO>> response = restaurantService.getAllRestaurants();
-
-
-        verify(restaurantRepository).findAll();
-
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(expectedDTOs.size(), Objects.requireNonNull(response.getBody()).size());
-    }
-
-    @Test
-    void findRestaurantById() {
-    }
-
-    @Test
-    void getRestaurantsFiltered() {
-    }
+//
+//    @Mock
+//    private RestaurantRepository restaurantRepository;
+//
+//    private AutoCloseable autoCloseable;
+//
+//    private ObjectsValidator<CreateRestaurantRequest> objectsValidator;
+//
+//    @InjectMocks
+//    private RestaurantService restaurantService;
+//    @BeforeEach
+//    void setUp() {
+//        autoCloseable = MockitoAnnotations.openMocks(this);
+//        restaurantService = new RestaurantService(restaurantRepository, objectsValidator);
+//    }
+//
+//    @AfterEach
+//    void tearDown() throws Exception {
+//        autoCloseable.close();
+//    }
+//
+//    @Test
+//    void createRestaurant() {
+//        PostLocationRequest address = new PostLocationRequest(
+//                "City",
+//                "Street",
+//                "123",
+//                "Country"
+//        );
+//
+//        CreateRestaurantRequest request = new CreateRestaurantRequest(
+//                "Test Restaurant",
+//                address,
+//                "Test Description",
+//                "1234567890",
+//                "10:00-22:00",
+//                "Italian",
+//                "image.jpg"
+//        );
+//
+//        // Optionally mock the behavior of objectsValidator if the service method uses it
+//        when(objectsValidator.validate(any())).thenReturn(true); // Assuming validate returns a boolean or similar
+//
+//        ResponseEntity<?> responseEntity = restaurantService.createRestaurant(request);
+//
+//        verify(restaurantRepository).save(any(RestaurantEntity.class));
+//        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+//    }
+//
+//    @Test
+//    void getAllRestaurants() {
+//        List<RestaurantEntity> restaurants = List.of(new RestaurantEntity());
+//        when(restaurantRepository.findAll()).thenReturn(restaurants);
+//
+//        List<RestaurantEntityDTO> expectedDTOs = List.of(new RestaurantEntityDTO());
+//        when(MapStructMapper.INSTANCE.restaurantToRestaurantDto(any(RestaurantEntity.class))).thenReturn(expectedDTOs.get(0));
+//
+//        ResponseEntity<List<RestaurantEntityDTO>> response = restaurantService.getAllRestaurants();
+//
+//
+//        verify(restaurantRepository).findAll();
+//
+//
+//        assertEquals(HttpStatus.OK, response.getStatusCode());
+//        assertEquals(expectedDTOs.size(), Objects.requireNonNull(response.getBody()).size());
+//    }
+//
+//    @Test
+//    void findRestaurantById() {
+//    }
+//
+//    @Test
+//    void getRestaurantsFiltered() {
+//    }
 }

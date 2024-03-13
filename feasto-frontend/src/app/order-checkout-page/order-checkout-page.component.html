@@ -68,20 +68,22 @@
     <div class="card-body">
       <h5 class="card-title custom-card-title">Order Summary</h5>
       <div>
-        <p>Subtotal: PLN 94.95</p>
+        <p>Subtotal: PLN {{finalOrderRequest?.totalPrice ?? 0}}</p>
         <p>Delivery Fee: PLN 0.00</p>
       </div>
 
       <div class="my-3">
         <label for="tip1" class="form-label">Add a tip</label>
-        <select class="form-select custom-form-select" id="tip1">
-          <option>Not now</option>
-          <option>10%</option>
-          <option>15%</option>
-          <option>20%</option>
-          <option>25%</option>
+        <select class="form-select custom-form-select" [(ngModel)]="selectedTip"  id="tip1">
+          <option [value]="null">Not now</option> <!-- Represents no tip selected -->
+          <option value="0.10">10%</option>
+          <option value="0.15">15%</option>
+          <option value="0.2">20%</option>
+          <option value="0.25">25%</option>
         </select>
       </div>
+
+
 
 
       <div class="my-3">
@@ -93,9 +95,10 @@
         </select>
       </div>
 
-      <div class="fw-bold custom-total">Total: PLN 94.95</div>
+      <div class="fw-bold custom-total">Total: {{(finalOrderRequest?.totalPrice ?? 0) + (finalOrderRequest?.totalPrice ?? 0) * (selectedTip ?? 0)}}</div>
 
-      <button class="btn btn-success custom-order-button mt-3" (click)="placeOrder()">Place Your Order</button>
+
+      <button class="btn btn-success custom-order-button mt-3" (click)="testFunc()">Place Your Order</button>
     </div>
 
   </div>

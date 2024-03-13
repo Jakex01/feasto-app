@@ -5,16 +5,17 @@ import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.payments.request.PaymentRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api")
 public class PaypalController {
-    // w sukcesie trzeba zmienić protokół z https -> http
     private final PaypalService paypalService;
 
     @GetMapping("/")
@@ -24,7 +25,7 @@ public class PaypalController {
 
     @PostMapping("/payment/create")
     public RedirectView createPayment(
-//            @RequestBody PaymentRequest paymentRequest
+            @RequestBody PaymentRequest paymentRequest
             ){
 
         try{
@@ -33,8 +34,8 @@ public class PaypalController {
             String successUrl = "https://localhost:8081/payment/success";
 
             Payment payment = paypalService.createPayment(
-                    10.0,
-                    "USD",
+                    paymentRequest.amount(),
+                    "PLN",
                     "paypal",
                     "sale",
                     "payment",

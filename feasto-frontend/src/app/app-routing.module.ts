@@ -9,6 +9,8 @@ import {LoginPageComponent} from "./authentication/login-page/login-page.compone
 import {RegisterPageComponent} from "./authentication/register-page/register-page.component";
 import {OrderCheckoutPageComponent} from "./order-checkout-page/order-checkout-page.component";
 
+import {TestkubaComponent} from "./testkuba/testkuba.component";
+
 const routes: Routes = [
 
   { path: 'restaurants',
@@ -43,6 +45,10 @@ const routes: Routes = [
   {
     path: 'checkout',
     component: OrderCheckoutPageComponent
+  },
+  {
+    path: 'test1',
+    component:TestkubaComponent
   }
 ];
 

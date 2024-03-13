@@ -20,6 +20,7 @@ export class OrderCheckoutPageComponent implements OnInit{
   selectedPaymentMethod: string = '';
   private subscription: Subscription;
   paymentMethodSelected: boolean = false;
+  selectedTip: number | null = null;
   selectPaymentMethod(method: string) {
 
     this.selectedPaymentMethod = method;
@@ -61,27 +62,50 @@ export class OrderCheckoutPageComponent implements OnInit{
           }
         })
     }
+    testFunc(){
+    this.paymentService.test().subscribe({
+      next: (response) => {
+        console.log(response);
+      }
+    })
+    }
 
   placeOrder(){
-    console.log("here")
-    const paymentRequest = {
-      amount: this.finalOrderRequest?.totalPrice,
-      currency: "PLN",
-      method: "paypal",
-      description: "Payment"
-    };
-    this.selectPaymentMethod('paypal');
 
-    if(this.selectedPaymentMethod === 'paypal') {
-      this.paymentService.createPayment(paymentRequest).subscribe({
-        next: (response) => {
-          window.location.href = response.url;
-        },
-        error: (error) => {
-          console.error('Payment creation failed', error);
-        }
-      });
+
+
+    let payment=0;
+
+    if(this.finalOrderRequest?.totalPrice){
+
+      if(this.selectedTip){
+         payment = this.finalOrderRequest.totalPrice + this.finalOrderRequest.totalPrice*this.selectedTip;
+      }else{
+         payment = this.finalOrderRequest.totalPrice;
+      }
+      const paymentRequest = {
+        amount: payment,
+        currency: "PLN",
+        method: "paypal",
+        description: "Payment"
+      };
+      this.selectPaymentMethod('paypal');
+
+      if(this.selectedPaymentMethod === 'paypal') {
+        this.paymentService.createPayment(paymentRequest).subscribe({
+          next: (response) => {
+            window.location.href = response.url;
+          },
+          error: (error) => {
+            console.error('Payment creation failed', error);
+          }
+        });
+      }
+
     }
+
+
+
   }
 
 

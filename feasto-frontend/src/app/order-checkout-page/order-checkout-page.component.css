@@ -122,3 +122,12 @@ p {
   top: 50%;
   transform: translateY(-50%);
 }
+.tip-selected {
+  /* Styles for when a tip is selected */
+  border: 2px solid green;
+}
+
+.no-tip {
+  /* Styles for when no tip is selected */
+  border: 2px solid red;
+}

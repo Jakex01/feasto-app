@@ -1,8 +1,8 @@
 package org.payments.request;
 
 public record PaymentRequest(
+        double amount,
         String method,
-        String amount,
         String currency,
         String description
 ) {

@@ -14,5 +14,8 @@ export class PaymentService {
     console.log(`${this.baseUrl}/payment/create`);
     return this.http.post(`${this.baseUrl}/payment/create`, paymentRequest);
   }
+  test(){
+    return this.http.get(`${this.baseUrl}/`);
+  }
 
 }
