@@ -1,17 +1,21 @@
 services:
   postgres:
-    container_name: postgres-sql
-    image: postgres
+    build:
+        context: ./database
+        dockerfile: Dockerfile
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     ports:
       - "5432:5432"
-    networks:
-      - postgres
     restart: unless-stopped
 
   pgadmin:
@@ -25,19 +29,31 @@ services:
       - pgadmin:/var/lib/pgadmin
     ports:
       - "5050:80"
-    networks:
-      - postgres
     restart: unless-stopped
 
   restaurant:
     container_name: restaurant-service
-    image: build
+    build:
+      context: ./restaurant
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
 
-networks:
-  postgres:
-    driver: bridge
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+
+
+
 
 volumes:
   postgres:
   pgadmin:
+
+
+
+
+
+
 
