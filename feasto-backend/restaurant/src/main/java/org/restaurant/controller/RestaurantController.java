@@ -8,6 +8,8 @@ import org.restaurant.request.CreateRestaurantRequest;
 import org.restaurant.response.RestaurantResponse;
 import org.restaurant.service.RestaurantService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -21,6 +23,7 @@ import java.util.List;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+
 
     @PostMapping
     public ResponseEntity<?> addRestaurant(@RequestBody CreateRestaurantRequest createRestaurantRequest){
@@ -43,4 +46,5 @@ public class RestaurantController {
     ){
      return restaurantService.getRestaurantsFiltered(foodType, rating, priceRange);
     }
+
 }

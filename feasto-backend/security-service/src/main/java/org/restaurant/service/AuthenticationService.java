@@ -13,16 +13,22 @@ import org.restaurant.repository.UserCredentialRepository;
 import org.restaurant.request.AuthenticationRequest;
 import org.restaurant.request.RegisterRequest;
 import org.restaurant.response.AuthenticationResponse;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +39,8 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private AmqpTemplate rabbitTemplate;
+    private TopicExchange userExchange;
     public AuthenticationResponse register(RegisterRequest request) {
     var user = UserCredentialEntity.builder()
             .firstname(request.getFirstname())
@@ -126,5 +134,15 @@ public class AuthenticationService {
             new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
+    }
+
+    public void getCurrentlyLoggedUser(Authentication authentication) {
+        UserCredentialEntity principal = (UserCredentialEntity) authentication.getPrincipal();
+
+        UserCredentialEntity userEntity = userCredentialRepository.findById(principal.getId())
+                .orElseThrow(() -> new UsernameNotFoundException("user not found"));
+
+        rabbitTemplate.convertAndSend(userExchange.getName(), "user.id", userEntity.getId());
+
     }
 }

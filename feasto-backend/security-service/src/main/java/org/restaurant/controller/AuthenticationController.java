@@ -8,9 +8,11 @@ import org.restaurant.request.RegisterRequest;
 import org.restaurant.response.AuthenticationResponse;
 import org.restaurant.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -19,6 +21,11 @@ import java.io.IOException;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+
+    @GetMapping("/user")
+    public void getToken(Authentication principal){
+         authenticationService.getCurrentlyLoggedUser(principal);
+    }
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
