@@ -1,11 +1,16 @@
 package org.restaurant.controller;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.restaurant.service.UserFavoriteRestaurantService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,8 +29,11 @@ public class UserFavoriteRestaurantsController {
         return userFavoriteRestaurantService.deleteFavoriteRestaurant(restaurantId);
     }
     @GetMapping
-    public ResponseEntity<?> getFavourites(){
-        return userFavoriteRestaurantService.getFavourites();
+    @ResponseStatus(HttpStatus.CREATED)
+    @CircuitBreaker(name="security", fallbackMethod = "fallBackFavorite")
+    @TimeLimiter(name="security")
+    public CompletableFuture<?> getFavourites(){
+      return   CompletableFuture.supplyAsync(userFavoriteRestaurantService::getFavourites);
     }
 
 }

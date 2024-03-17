@@ -1,5 +1,6 @@
 package org.restaurant.controller;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.restaurant.request.OrderRequest;
 import org.restaurant.service.OrderService;
@@ -17,6 +18,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
+    @CircuitBreaker(name = "notification")
     public ResponseEntity<?> postOrder(@RequestBody OrderRequest orderRequest){
         return orderService.postOrder(orderRequest);
     }
