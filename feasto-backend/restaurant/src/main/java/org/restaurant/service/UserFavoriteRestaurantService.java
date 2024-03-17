@@ -8,6 +8,10 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -15,19 +19,54 @@ import org.springframework.stereotype.Service;
 public class UserFavoriteRestaurantService {
 
     private final UserFavoriteRestaurantRepository userFavoriteRestaurantRepository;
+    private final WebClient webClient;
 
-    @RabbitListener(queues = "userQueue")
-    public ResponseEntity<?> addFavoriteRestaurant(Long restaurantId) {
-        FavoriteRestaurantEntity favoriteRestaurantEntity = new FavoriteRestaurantEntity();
-        favoriteRestaurantEntity.setRestaurantId(restaurantId);
-        favoriteRestaurantEntity.setUserId(1L);
-           userFavoriteRestaurantRepository.save(favoriteRestaurantEntity);
 
-           return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<?> addFavoriteRestaurant(Long restaurantId)
+    {
+        Long userId = webClient.get()
+                .uri("http://localhost:8083/api/auth/user")
+                .retrieve()
+                .bodyToMono(Long.class)
+                .block();
+        FavoriteRestaurantEntity favoriteRestaurantEntity = FavoriteRestaurantEntity
+                .builder()
+                .restaurantId(restaurantId)
+                .userId(userId)
+                .build();
+
+        if(userId!=null){
+            userFavoriteRestaurantRepository.saveAndFlush(favoriteRestaurantEntity);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }else {
+            throw new IllegalArgumentException("UserId can't be null");
+        }
     }
-    @RabbitListener(queues = "userQueue")
-    public Long processUserId(Long userId) {
-        return userId;
+
+    public ResponseEntity<?> deleteFavoriteRestaurant(Long restaurantId) {
+        userFavoriteRestaurantRepository.findById(restaurantId)
+                .ifPresent(userFavoriteRestaurantRepository::delete);
+
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+    }
+    public ResponseEntity<List<Long>> getFavourites(){
+
+        Long userId = webClient.get()
+                .uri("http://localhost:8083/api/auth/user")
+                .retrieve()
+                .bodyToMono(Long.class)
+                .block();
+        if(userId!=null) {
+            List<Long> restaurantIds = userFavoriteRestaurantRepository
+                    .findAllByUserId(userId)
+                    .stream()
+                    .map(FavoriteRestaurantEntity::getRestaurantId)
+                    .toList();
+            return ResponseEntity.ok(restaurantIds);
+        }else{
+            throw new IllegalArgumentException("UserId can't be null");
+        }
     }
 
 }
