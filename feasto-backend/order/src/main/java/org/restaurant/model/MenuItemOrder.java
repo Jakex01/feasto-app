@@ -3,8 +3,6 @@ package org.restaurant.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.restaurant.model.enums.FoodAdditives;
-import org.restaurant.model.enums.FoodSize;
 import java.util.Map;
 
 @Entity
@@ -40,6 +38,6 @@ public class MenuItemOrder {
 
     private int quantity;
 
-    @Column(length = 1024) // Assuming the note can be lengthy
+    @Column(length = 1024)
     private String note;
 }

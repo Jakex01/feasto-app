@@ -1,14 +1,18 @@
 package org.restaurant.controller;
 
+import com.itextpdf.text.DocumentException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.restaurant.request.OrderRequest;
 import org.restaurant.service.OrderService;
+import org.restaurant.service.PdfService;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,10 +21,12 @@ public class OrderController {
 
     private final OrderService orderService;
 
+
     @PostMapping
-    @CircuitBreaker(name = "notification")
-    public ResponseEntity<?> postOrder(@RequestBody OrderRequest orderRequest){
+    public ResponseEntity<?> postOrder(@RequestBody OrderRequest orderRequest) throws DocumentException, IOException, URISyntaxException {
         return orderService.postOrder(orderRequest);
     }
+
+
 
 }

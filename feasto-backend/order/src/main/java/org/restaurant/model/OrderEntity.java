@@ -28,6 +28,9 @@ public class OrderEntity {
 
     private Long restaurantId;
 
+    @Column(length = 1024)
+    private String orderNote;
+
     @CreatedDate
     @Column(
             updatable = false,

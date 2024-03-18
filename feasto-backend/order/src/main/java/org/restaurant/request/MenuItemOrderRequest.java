@@ -10,9 +10,11 @@ public record MenuItemOrderRequest(
      boolean available,
 
      String category,
+     int quantity,
      Map<String, Double> foodAdditivePrices,
      Double selectedPrice,
      Double selectedSize,
+     Double totalItemPrice,
      String note
 ) {
 }
