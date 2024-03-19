@@ -23,8 +23,8 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @GetMapping("/user")
-    public void getToken(Authentication principal){
-         authenticationService.getCurrentlyLoggedUser(principal);
+    public String getToken(Authentication principal){
+        return authenticationService.getCurrentlyLoggedUser(principal);
     }
 
     @PostMapping("/register")

@@ -1,14 +1,13 @@
 package org.restaurant.config;
-import org.springframework.amqp.core.TopicExchange;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-public class RabbitMqConfig {
-
+public class WebClientConfig {
     @Bean
-    public TopicExchange userExchange() {
-        return new TopicExchange("userExchange");
+    public WebClient webClient(){
+        return WebClient.builder().build();
     }
-
 }

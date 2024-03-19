@@ -136,13 +136,12 @@ public class AuthenticationService {
         }
     }
 
-    public void getCurrentlyLoggedUser(Authentication authentication) {
+    public String getCurrentlyLoggedUser(Authentication authentication) {
         UserCredentialEntity principal = (UserCredentialEntity) authentication.getPrincipal();
 
         UserCredentialEntity userEntity = userCredentialRepository.findById(principal.getId())
                 .orElseThrow(() -> new UsernameNotFoundException("user not found"));
 
-        rabbitTemplate.convertAndSend(userExchange.getName(), "user.id", userEntity.getId());
-
+        return userEntity.getEmail();
     }
 }
