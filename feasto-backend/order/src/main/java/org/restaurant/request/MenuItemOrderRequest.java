@@ -13,7 +13,7 @@ public record MenuItemOrderRequest(
      int quantity,
      Map<String, Double> foodAdditivePrices,
      Double selectedPrice,
-     Double selectedSize,
+     String selectedSize,
      Double totalItemPrice,
      String note
 ) {

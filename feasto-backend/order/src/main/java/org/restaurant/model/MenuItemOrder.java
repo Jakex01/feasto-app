@@ -34,9 +34,11 @@ public class MenuItemOrder {
 
     private Double selectedPrice;
 
-    private Double generalPrice;
+    private Double totalItemPrice;
 
     private int quantity;
+
+
 
     @Column(length = 1024)
     private String note;

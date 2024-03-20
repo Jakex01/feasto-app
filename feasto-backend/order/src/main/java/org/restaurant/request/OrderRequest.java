@@ -1,8 +1,6 @@
 package org.restaurant.request;
 
 
-import org.restaurant.model.MenuItemOrder;
-
 import java.util.List;
 
 public record OrderRequest(

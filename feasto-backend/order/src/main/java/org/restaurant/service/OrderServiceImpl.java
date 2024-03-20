@@ -10,20 +10,22 @@ import org.restaurant.model.MessageNotification;
 import org.restaurant.model.OrderEntity;
 import org.restaurant.repository.OrderRepository;
 import org.restaurant.request.OrderRequest;
+import org.restaurant.util.JwtUtil;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Base64;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
+
 
 
 @Service
+@CrossOrigin
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService{
 
@@ -31,27 +33,29 @@ public class OrderServiceImpl implements OrderService{
     private final PdfServiceImpl pdfService;
     private final RabbitTemplate rabbitTemplate;
     private final WebClient webClient;
+
     @SneakyThrows
-    public ResponseEntity<?> postOrder(OrderRequest orderRequest)  {
+    public ResponseEntity<?> postOrder(OrderRequest orderRequest, String token)  {
 
 
         OrderEntity order = MapStructMapper.INSTANCE.requestToEntity(orderRequest);
-
         orderRepository.save(order);
 
-        SendPdfToNotification(orderRequest);
+        SendPdfToNotification(orderRequest, token);
 
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
     @SneakyThrows
-    public void SendPdfToNotification(OrderRequest orderRequest)  {
+    public void SendPdfToNotification(OrderRequest orderRequest, String token)  {
+
+        String jwtToken = JwtUtil.extractToken(token);
 
         String userEmail = webClient.get()
-                .uri("http://localhost:8083/api/auth/user")
+                .uri("http://localhost:8762/api/auth/user")
+                .header("Authorization", "Bearer " + jwtToken)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-
 
         byte[] pdfContent = pdfService.generatePdf(orderRequest);
 

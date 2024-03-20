@@ -3,11 +3,8 @@ package org.restaurant.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.List;
 
 @Entity
@@ -27,19 +24,22 @@ public class OrderEntity {
     private Double totalPrice;
 
     private Long restaurantId;
+    private String restaurantName;
+    private Double tip;
+    private Double deliveryFee;
 
     @Column(length = 1024)
     private String orderNote;
 
-    @CreatedDate
-    @Column(
-            updatable = false,
-            nullable = false
-    )
-    private LocalDateTime createDate;
-
-    @LastModifiedDate
-    @Column
-    private LocalDateTime updateTime;
+//    @CreatedDate
+//    @Column(
+//            updatable = false,
+//            nullable = false
+//    )
+//    private LocalDateTime createDate;
+//
+//    @LastModifiedDate
+//    @Column
+//    private LocalDateTime updateTime;
 
 }

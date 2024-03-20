@@ -9,6 +9,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 public interface OrderService {
-    ResponseEntity<?> postOrder(OrderRequest orderRequest) throws DocumentException, IOException, URISyntaxException;
+    ResponseEntity<?> postOrder(OrderRequest orderRequest, String token) throws DocumentException, IOException, URISyntaxException;
 
 }

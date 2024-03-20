@@ -31,13 +31,11 @@ public class NotificationService {
     }
     @SneakyThrows
     private void sendEmailWithPdf(MessageNotification messageNotification)  {
-
-        try {
+           try {
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
             helper.setFrom(fromMail);
-            helper.setTo(messageNotification.email());
+            helper.setTo("kubasokol3001@gmail.com");
             helper.setSubject("Your bill");
             helper.setText("Find attached your invoice.");
 

@@ -3,13 +3,12 @@ package org.restaurant.service;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.restaurant.request.OrderRequest;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -23,7 +22,9 @@ public class PdfServiceImpl implements PdfService{
     private static final Font CONTENT_FONT = new Font(Font.FontFamily.HELVETICA, 15);
 
     @Override
-    public byte[] generatePdf(OrderRequest orderRequest) throws DocumentException, IOException, URISyntaxException {
+    @SneakyThrows
+    public byte[] generatePdf(OrderRequest orderRequest) {
+
 
         AtomicReference<Double> additivesPrice = new AtomicReference<>(0.0);
 
@@ -34,8 +35,11 @@ public class PdfServiceImpl implements PdfService{
 
         Document document = new Document();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
+        PdfWriter writer = PdfWriter.getInstance(document, byteArrayOutputStream);
+        document.open();
         try {
+
+
         Paragraph restaurantTitle = new Paragraph(orderRequest.restaurantName(), TITLE_FONT);
 
         restaurantTitle.setAlignment(Element.ALIGN_CENTER);
@@ -74,7 +78,7 @@ public class PdfServiceImpl implements PdfService{
 
         orderRequest.items()
                 .forEach(t->{
-            addOrderRow(table, t.name(), t.selectedSize().toString(), t.selectedPrice(), t.foodAdditivePrices(),t.quantity());
+            addOrderRow(table, t.name(), t.selectedSize(), t.selectedPrice(), t.foodAdditivePrices(),t.quantity());
         });
 
         document.add(table);
@@ -121,7 +125,9 @@ public class PdfServiceImpl implements PdfService{
         ByteArrayOutputStream encryptedPdfOutput = new ByteArrayOutputStream();
 
         PdfReader pdfReader = new PdfReader(new ByteArrayInputStream(pdfBytes));
+
         PdfStamper pdfStamper = new PdfStamper(pdfReader, encryptedPdfOutput);
+
 
         pdfStamper.setEncryption(
                 "userpass".getBytes(),

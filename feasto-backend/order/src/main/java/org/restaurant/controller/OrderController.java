@@ -6,8 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.restaurant.request.OrderRequest;
 import org.restaurant.service.OrderService;
 import org.restaurant.service.PdfService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,16 +18,20 @@ import java.net.URISyntaxException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/order")
+@RequestMapping(value = "/api/order",
+produces = MediaType.APPLICATION_JSON_VALUE,
+consumes = MediaType.APPLICATION_JSON_VALUE)
 public class OrderController {
 
     private final OrderService orderService;
 
 
-    @PostMapping
-    public ResponseEntity<?> postOrder(@RequestBody OrderRequest orderRequest) throws DocumentException, IOException, URISyntaxException {
-        return orderService.postOrder(orderRequest);
+    @PostMapping()
+    public ResponseEntity<?> postOrder(@RequestBody OrderRequest orderRequest, @RequestHeader(value = "Authorization") String token) throws DocumentException, IOException, URISyntaxException {
+        return orderService.postOrder(orderRequest, token);
     }
+
+
 
 
 
