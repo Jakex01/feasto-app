@@ -1,10 +1,5 @@
 FROM openjdk:17
-
-
-# copy build to container
+LABEL maintainer="Jakex01"
 COPY ./target/restaurant-0.0.1-SNAPSHOT.jar restaurant-0.0.1-SNAPSHOT.jar
-
-
-# run the jar file
 ENTRYPOINT ["java","-jar","/restaurant-0.0.1-SNAPSHOT.jar"]
 
