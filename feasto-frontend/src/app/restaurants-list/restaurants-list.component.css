@@ -128,7 +128,7 @@
 
 .filter-panel {
   display: flex;
-  justify-content: start; /* Aligns the filters to the start of the container */
+  justify-content: flex-start; /* Aligns the filters to the start of the container */
   flex-wrap: nowrap; /* Prevents the filters from wrapping onto the next line */
 }
 
@@ -195,7 +195,7 @@ select::-ms-expand {
 .sort-place{
   margin-left: 300px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 #closeButton {

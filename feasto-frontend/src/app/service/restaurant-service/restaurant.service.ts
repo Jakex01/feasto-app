@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {RestaurantDtoModel} from "../../model/RestaurantDtoModel";
 import {Observable} from "rxjs";
 import {RestaurantFilterModel} from "../../model/RestaurantFilterModel";
@@ -14,11 +14,18 @@ export class RestaurantService {
   private baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
-
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+    let headers = new HttpHeaders();
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
+  }
 
   getAllRestaurants(): Observable<RestaurantDtoModel[]> {
 
-    return this.http.get<RestaurantDtoModel[]>(`${this.baseUrl}/api/restaurant`);
+    return this.http.get<RestaurantDtoModel[]>(`${this.baseUrl}/api/restaurant`, { headers: this.getHeaders() });
   }
   getFilteredRestaurants(filters: RestaurantFilterModel): Observable<RestaurantDtoModel[]>{
 

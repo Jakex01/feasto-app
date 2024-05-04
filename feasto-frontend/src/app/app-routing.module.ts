@@ -8,6 +8,7 @@ import {TestCompComponent} from "./test-comp/test-comp.component";
 import {LoginPageComponent} from "./authentication/login-page/login-page.component";
 import {RegisterPageComponent} from "./authentication/register-page/register-page.component";
 import {OrderCheckoutPageComponent} from "./order-checkout-page/order-checkout-page.component";
+import {OrdersComponent} from "./pages/orders/orders.component";
 
 
 
@@ -45,6 +46,10 @@ const routes: Routes = [
   {
     path: 'checkout',
     component: OrderCheckoutPageComponent
+  },
+  {
+    path:'orders',
+    component: OrdersComponent
   }
 ];
 

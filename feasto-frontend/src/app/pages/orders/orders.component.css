@@ -1,0 +1,64 @@
+/* Stylizacja zakładek */
+.tabs button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  background-color: #e9ecef;
+  color: #495057;
+  border-bottom: 3px solid transparent;
+  outline: none;
+}
+
+.tabs button.active {
+  border-bottom: 3px solid #007bff;
+  background-color: white;
+}
+
+/* Stylizacja kart */
+.card {
+  border: 1px solid #e3e6f0;
+  border-radius: .35rem;
+  box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
+  transition: box-shadow 0.3s ease-in-out; /* Animacja przejścia dla cienia */
+}
+
+.card:hover {
+  box-shadow: 0 0.5rem 3rem rgba(58,59,69,.3); /* Zwiększony cień przy najechaniu kursorem */
+}
+
+.card-header {
+  background-color: #f8f9fc;
+}
+
+/* Animacja */
+.fadeSlideInOut {
+  display: block;
+}
+.narrow-button {
+  width: 300px; /* lub inna wartość, jaką preferujesz */
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.quantity-badge {
+  display: inline-block;
+  min-width: 20px; /* Minimalna szerokość kwadracika */
+  padding: 3px 7px; /* Wypełnienie wokół tekstu */
+  font-size: 0.8em; /* Wielkość czcionki */
+  color: #fff; /* Kolor tekstu */
+  background-color: #000; /* Kolor tła */
+  text-align: center; /* Wyśrodkowanie tekstu */
+  border-radius: 4px; /* Zaokrąglenie rogów */
+  margin-right: 5px; /* Odstęp od prawej strony */
+}
+.order-summary {
+  font-size: 0.9em; /* Ustawienie wielkości tekstu */
+  color: #888; /* Kolor tekstu */
+}
+
+.order-date-time {
+  font-weight: bold; /* Pogrubienie daty i godziny */
+  font-size: 0.9em;
+}
+

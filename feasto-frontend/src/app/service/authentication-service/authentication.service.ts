@@ -8,7 +8,7 @@ import {AuthenticationResponse} from "../../model/response/AuthenticationRespons
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private baseUrl = 'http://localhost:8762/api/auth';
+  private baseUrl = 'http://localhost:8083/api/auth';
 
   constructor(private http: HttpClient) { }
 

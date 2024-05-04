@@ -128,7 +128,7 @@
 .ratings, .custom-rating {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .ratings-cont{
   margin-top: 1.5rem;
@@ -284,7 +284,7 @@
 .food-card-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: flex-start;
 
 }
 
@@ -427,7 +427,7 @@
 .ratings, .custom-rating {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .ratings-cont{
   margin-top: 1.5rem;
@@ -583,7 +583,7 @@
 .food-card-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: flex-start;
 
 }
 

@@ -124,9 +124,9 @@
 /*}*/
 
 /* Stylizacja przycisku zamknięcia */
-.btn-close {
-  filter: invert(1); /* Biały krzyżyk */
-}
+/*.btn-close {*/
+/*  filter: invert(1); !* Biały krzyżyk *!*/
+/*}*/
 
 /* Stylizacja linków nawigacyjnych */
 .nav-link {
@@ -274,11 +274,188 @@
   color: #495057;
 }
 
-/* To ensure that offcanvas-footer stays at the bottom */
-/*.offcanvas-end {*/
-/*  position: relative; !* for absolute positioning context *!*/
-/*  padding-bottom: 120px; !* footer height + some space *!*/
+ /*To ensure that offcanvas-footer stays at the bottom */
+.offcanvas-end {
+  position: relative; /* for absolute positioning context */
+  padding-bottom: 120px; /* footer height + some space */
+}
+
+
+
+.modal-header {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.modal-title {
+  font-size: 1.25rem; /* Title size */
+  font-weight: bold; /* Title weight */
+  margin: 0; /* Remove default margin */
+}
+
+
+
+.location-details, .schedule-details {
+  background: #FFF; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  padding: 1rem; /* Spacing around the content */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Add shadow */
+}
+
+.location-details span, .schedule-details span {
+  display: block; /* Make the span a block element */
+}
+
+.btn-change, .btn-schedule {
+  color: #000; /* Text color for the buttons */
+  text-decoration: underline; /* Underline text */
+  background: none; /* No background */
+  border: none; /* No border */
+}
+
+.btn-finished {
+  width: 100%; /* Full width button */
+  background-color: #000; /* Black background */
+  color: #FFF; /* White text */
+  border-radius: 20px; /* Rounded corners */
+}
+.custom-modal-content {
+  background: #f1f1f1; /* Change color as needed */
+  border-radius: 10px; /* Rounded corners for the modal */
+}
+
+.custom-modal-header {
+  background: #000; /* Dark background for the header */
+  color: #fff; /* White text color */
+  border-top-left-radius: 10px; /* Rounded top-left corner */
+  border-top-right-radius: 10px; /* Rounded top-right corner */
+  padding: 16px; /* Padding for the header */
+}
+
+.custom-modal-body {
+  background: #fff; /* White background for the body */
+  padding: 20px; /* Padding for the body */
+}
+
+.custom-input-group {
+  margin-bottom: 10px; /* Spacing between input groups */
+}
+
+.custom-form-control {
+  border-radius: 20px; /* Rounded corners for inputs */
+  box-shadow: none; /* No shadow (remove if you prefer shadow) */
+}
+
+/*.btn-close-white {*/
+/*  filter: invert(1); !* Makes the close button white *!*/
 /*}*/
 
+.custom-modal-footer {
+  background: #fff; /* White background for the footer */
+  padding: 16px; /* Padding for the footer */
+  border-bottom-left-radius: 10px; /* Rounded bottom-left corner */
+  border-bottom-right-radius: 10px; /* Rounded bottom-right corner */
+}
 
+.custom-btn-secondary {
+  color: #000; /* Text color for the secondary button */
+  background-color: transparent; /* Transparent background */
+  border: 1px solid #000; /* Border for the secondary button */
+  border-radius: 20px; /* Rounded corners for buttons */
+}
+
+.custom-btn-primary {
+  color: #fff; /* White text color for the primary button */
+  background-color: #000; /* Dark background for the primary button */
+  border-radius: 20px; /* Rounded corners for buttons */
+}
+.btn-bordered {
+  border: 1px solid #ccc; /* Light gray border */
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Optional: adding a subtle shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.btn-bordered:hover {
+  border-color: #007bff; /* Change border color on hover to a blue */
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.2); /* Darker shadow on hover for more depth */
+}
+.date-item {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  margin: 0 7px; /* Horizontal space between the items */
+  flex: 0 0 auto;
+  width: calc(33.333% - 14px); /* Adjust width to fit three items, accounting for margin */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+.date-item.selected {
+  background-color: #007bff; /* Bootstrap primary color for the selected item */
+  color: #ffffff; /* White text for better readability */
+  border: 1px solid #0056b3; /* Darker border to match */
+}
+
+.date-item:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+}
+
+
+.date-item .day {
+  font-weight: bold; /* Make the day bold */
+  font-size: 1rem; /* Font size for the day */
+  margin-bottom: 5px; /* Space between the day and the date */
+}
+
+.date-item .date {
+  font-size: 0.85rem; /* Slightly smaller font size for the date */
+}
+
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(36%) sepia(94%) saturate(747%) hue-rotate(340deg) brightness(102%) contrast(101%);
+}
+.hours-list {
+  height: 168px; /* Height for 4 buttons */
+  overflow-y: auto; /* Enable vertical scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+}
+
+.hours-list button {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  width: 100%; /* Take full width of container */
+  box-sizing: border-box;
+  display: flex;  /* Align children (text and icon) in a row */
+  justify-content: space-between; /* Distribute space between text and icon */
+  align-items: center; /* Center align items vertically */
+}
+
+.hours-list .time-text {
+  display: flex;
+  justify-content: flex-start;
+  flex-grow: 1; /* Allows text to grow and fill available space, pushing the icon to the right */
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.hours-list i {
+  margin-left: auto; /* Ensures margin is on the left of the icon, pushing it to the right */
+}
+
+.hours-list button:hover {
+  background-color: #f8f9fa; /* Slightly different background on hover */
+}
+
+.btn-close-black {
+  filter: invert(0) grayscale(100%) brightness(0);
+}
 

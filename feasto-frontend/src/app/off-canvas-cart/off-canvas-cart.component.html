@@ -1,11 +1,10 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" data-bs-backdrop="false" aria-labelledby="offcanvasCartLabel" #modal>
   <div class="cart-header">
-    <h5 id="offcanvasCartLabel">Trzcina Bistro Kielce</h5>
+    <h5 id="offcanvasCartLabel">Nazwa restauracji</h5>
     <button type="button" class="btn-close btn-close-black text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
   </div>
   <div class="cart-body">
-    <div class="cart-delivery-address">Deliver to Lotnicza 8</div>
     <div class="cart-items">
       <div *ngFor="let item of orderRequest.items" class="cart-item">
         <div class="cart-item-name">{{ item.name }}</div>
@@ -28,9 +27,7 @@
       </div>
 
     </div>
-    <div class="cart-notes">
-      <input type="text" placeholder="Add an order note" class="cart-notes-input">
-    </div>
+
   </div>
   <div class="cart-footer">
     <div class="cart-subtotal">Subtotal: PLN 44.40</div>

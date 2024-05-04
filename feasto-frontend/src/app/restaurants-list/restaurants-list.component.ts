@@ -25,7 +25,7 @@ export class RestaurantsListComponent implements OnInit{
     this.restaurantService.getAllRestaurants().subscribe({
       next: (response: RestaurantDtoModel[]) => {
         this.restaurants = response;
-        console.log(response)
+        console.log("here is my response: "+response)
         this.numberOfResults = response.length;
 
       },

@@ -54,6 +54,7 @@ export class LoginPageComponent {
         next: (response) => {
           this.authResponse = response;
             localStorage.setItem('token', response.accessToken as string);
+
             this.router.navigate(['main']);
         }
       });

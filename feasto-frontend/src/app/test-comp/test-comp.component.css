@@ -27,7 +27,7 @@
 
 .close-button {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   color: #aaaaaa;
   float: right;
   font-size: 28px;

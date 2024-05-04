@@ -15,7 +15,8 @@ import {MainPageComponent} from "./main-page/main-page.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ObjectToArrayPipe} from "./pipes/ObjectToArrayPipe";
 import {OffCanvasCartComponent} from "./off-canvas-cart/off-canvas-cart.component";
-
+import {OrdersComponent} from "./pages/orders/orders.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import {OffCanvasCartComponent} from "./off-canvas-cart/off-canvas-cart.componen
     RestaurantPageComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
