@@ -19,9 +19,10 @@ public class LocationController {
 
     @PostMapping
     public ResponseEntity<LocationResponse> createLocation(
-            @RequestBody LocationRequest locationRequest
+            @RequestBody LocationRequest locationRequest,
+            Authentication authentication
     ) {
-        return locationService.createLocation(locationRequest);
+        return locationService.createLocation(locationRequest, authentication);
     }
     @PatchMapping
     public ResponseEntity<?> updateLocation(

@@ -184,6 +184,7 @@ export class MainNavbarComponent implements OnInit{
     const foundLocation = this.locations.find(loc => loc.id === location.id);
     if (foundLocation) {
       foundLocation.current = true;
+      this.selectedDeliveryStreetName = foundLocation.street + " " + foundLocation.streetNumber;
     }
     location.current = true;
     this.locationService.updateLocation(this.locations);
