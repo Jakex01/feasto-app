@@ -28,6 +28,9 @@ public class UserCredentialEntity implements UserDetails {
 
     @OneToMany(mappedBy = "userCredentialEntity")
     private List<TokenEntity> tokens;
+
+    @OneToMany(mappedBy = "userCredentialEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<LocationEntity> locations;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

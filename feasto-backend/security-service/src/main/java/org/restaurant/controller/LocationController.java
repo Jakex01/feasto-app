@@ -1,11 +1,12 @@
 package org.restaurant.controller;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.restaurant.request.LocationRequest;
-import org.restaurant.request.UpdateLocationRequest;
 import org.restaurant.response.LocationResponse;
 import org.restaurant.service.LocationServiceImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,8 +25,9 @@ public class LocationController {
     }
     @PatchMapping
     public ResponseEntity<?> updateLocation(
-            @RequestBody UpdateLocationRequest updateLocationRequest
+            @RequestParam @NonNull Long id,
+            Authentication principal
     ){
-        return locationService.updateLocation(updateLocationRequest);
+        return locationService.updateLocation(id, principal);
     }
 }
