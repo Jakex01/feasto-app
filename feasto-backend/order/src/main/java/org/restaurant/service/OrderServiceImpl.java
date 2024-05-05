@@ -8,6 +8,7 @@ import org.restaurant.model.MessageNotification;
 import org.restaurant.model.OrderEntity;
 import org.restaurant.repository.OrderRepository;
 import org.restaurant.request.OrderRequest;
+import org.restaurant.request.OrderUpdateRequest;
 import org.restaurant.util.JwtUtil;
 import org.restaurant.util.OrderUtil;
 import org.restaurant.validators.ObjectsValidator;
@@ -44,6 +45,15 @@ public class OrderServiceImpl implements OrderService{
        int deliveryTime = orderUtil.estimateDeliveryTime(order.getRestaurantId(),jwtToken, order.getDeliveryOption());
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
+
+    @Override
+    public ResponseEntity<?> updateOrder(OrderUpdateRequest orderUpdateRequest) {
+        OrderEntity order = orderRepository.findByRestaurantId(orderUpdateRequest.restaurantId());
+        order.setOrderStatus(orderUpdateRequest.orderStatus());
+        orderRepository.save(order);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
     @SneakyThrows
     public void SendPdfToNotification(OrderRequest orderRequest, String token)  {
 

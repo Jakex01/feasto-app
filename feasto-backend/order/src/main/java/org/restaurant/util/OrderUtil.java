@@ -23,11 +23,39 @@ public class OrderUtil {
                 int activeDeliveries = orderRepository.countBySpecificStatuses(activeStatuses);
                 int delayPerOrder = 3;
                 int delayDueToActiveDeliveries = activeDeliveries * delayPerOrder;
+
+
+
+                String origin =  webClient.get()
+                        .uri(uriBuilder -> uriBuilder
+                                .scheme("http")
+                                .host("localhost")
+                                .port(8762)
+                                .path("/api/google-maps/calculate-travel-time")
+                                .queryParam("city", "Warsaw")
+                                .queryParam("restaurantId", restaurantId)
+                                .build())
+                        .retrieve()
+                        .bodyToMono(String.class)
+                        .block();
+
+                String destination = webClient.get()
+                        .uri(uriBuilder -> uriBuilder
+                                .scheme("http")
+                                .host("localhost")
+                                .port(8080)
+                                .path("/api/location")
+                                .build())
+                        .header("Authorization", "Bearer " + jwtToken)
+                        .retrieve()
+                        .bodyToMono(String.class)
+                        .block();
+
                 String travelTime = webClient.get()
                         .uri(uriBuilder -> uriBuilder
                                 .scheme("http")
                                 .host("localhost")
-                                .port(8762) // do sprawdzenia port
+                                .port(8762)
                                 .path("/api/google-maps/calculate-travel-time")
                                 .queryParam("origin", origin)
                                 .queryParam("destination", destination)
@@ -37,8 +65,13 @@ public class OrderUtil {
                         .bodyToMono(String.class)
                         .block();
 
-                int travelTimeMinutes = Integer.parseInt(travelTime.replaceAll("[^0-9]", ""));
-                return travelTimeMinutes + delayDueToActiveDeliveries;
+                if(travelTime!=null){
+                    int travelTimeMinutes = Integer.parseInt(travelTime.replaceAll("[^0-9]", ""));
+                    return travelTimeMinutes + delayDueToActiveDeliveries;
+                }else{
+                    return 0;
+                }
+
             }else{
                 List<OrderStatus> activeStatuses = Arrays.asList(OrderStatus.PENDING, OrderStatus.ACCEPTED, OrderStatus.IN_PREPARATION);
                 int activeDeliveries = orderRepository.countBySpecificStatuses(activeStatuses);
@@ -47,7 +80,7 @@ public class OrderUtil {
             }
         } catch (Exception e) {
             System.err.println("Failed to estimate delivery time: " + e.getMessage());
-            return -1;  // Symbolizuje błąd w oszacowaniu
+            return -1;
         }
     }
 }

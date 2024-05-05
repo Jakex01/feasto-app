@@ -1,15 +1,10 @@
 package org.restaurant.controller;
 
 import com.itextpdf.text.DocumentException;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.restaurant.request.OrderRequest;
 import org.restaurant.request.OrderUpdateRequest;
 import org.restaurant.service.OrderService;
-import org.restaurant.service.PdfService;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
