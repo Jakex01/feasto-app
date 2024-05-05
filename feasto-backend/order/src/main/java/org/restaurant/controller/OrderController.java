@@ -4,6 +4,7 @@ import com.itextpdf.text.DocumentException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.restaurant.request.OrderRequest;
+import org.restaurant.request.OrderUpdateRequest;
 import org.restaurant.service.OrderService;
 import org.restaurant.service.PdfService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -26,11 +27,14 @@ public class OrderController {
     private final OrderService orderService;
 
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<?> postOrder(@RequestBody OrderRequest orderRequest, @RequestHeader(value = "Authorization") String token) throws DocumentException, IOException, URISyntaxException {
         return orderService.postOrder(orderRequest, token);
     }
-
+    @PatchMapping
+    public ResponseEntity<?> updateOrder(@RequestBody OrderUpdateRequest orderUpdateRequest){
+        return orderService.updateOrder(orderUpdateRequest);
+    }
 
 
 

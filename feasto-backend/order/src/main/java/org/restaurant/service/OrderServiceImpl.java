@@ -1,8 +1,6 @@
 package org.restaurant.service;
 
-import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
-
 import lombok.SneakyThrows;
 import org.restaurant.config.RabbitMQConfig;
 import org.restaurant.mapstruct.MapStructMapper;
@@ -11,12 +9,11 @@ import org.restaurant.model.OrderEntity;
 import org.restaurant.repository.OrderRepository;
 import org.restaurant.request.OrderRequest;
 import org.restaurant.util.JwtUtil;
+import org.restaurant.util.OrderUtil;
 import org.restaurant.validators.ObjectsValidator;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -35,14 +32,16 @@ public class OrderServiceImpl implements OrderService{
     private final RabbitTemplate rabbitTemplate;
     private final WebClient webClient;
     private final ObjectsValidator<OrderRequest> orderRequestObjectsValidator;
+    private final OrderUtil orderUtil;
 
     @SneakyThrows
     public ResponseEntity<?> postOrder(OrderRequest orderRequest, String token)  {
         orderRequestObjectsValidator.validate(orderRequest);
+        String jwtToken = JwtUtil.extractToken(token);
         OrderEntity order = MapStructMapper.INSTANCE.requestToEntity(orderRequest);
         orderRepository.save(order);
         SendPdfToNotification(orderRequest, token);
-
+       int deliveryTime = orderUtil.estimateDeliveryTime(order.getRestaurantId(),jwtToken, order.getDeliveryOption());
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
     @SneakyThrows

@@ -10,4 +10,6 @@ public interface LocationService {
      ResponseEntity<LocationResponse> createLocation(LocationRequest request, Authentication authentication);
 
      ResponseEntity<?> updateLocation(Long id, Authentication principal);
+
+    ResponseEntity<String> getCurrentLocation(Authentication authentication);
 }

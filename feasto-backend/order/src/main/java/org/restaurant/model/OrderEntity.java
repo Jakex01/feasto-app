@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import org.restaurant.model.enums.DeliveryOption;
 import org.restaurant.model.enums.OrderStatus;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -31,9 +32,13 @@ public class OrderEntity {
     private String restaurantName;
     private Double tip;
     private Double deliveryFee;
+
     private int expectedDeliveryTimeInMinutes;
     @Column(length = 1024)
     private String orderNote;
+
+    @Enumerated(EnumType.STRING)
+    private DeliveryOption deliveryOption;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;

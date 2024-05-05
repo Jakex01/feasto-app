@@ -55,4 +55,13 @@ public class LocationServiceImpl implements LocationService{
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+    @Override
+    public ResponseEntity<String> getCurrentLocation(Authentication authentication) {
+        UserCredentialEntity principal = (UserCredentialEntity) authentication.getPrincipal();
+        UserCredentialEntity userEntity = userCredentialRepository.findById(principal.getId())
+                .orElseThrow(() -> new UsernameNotFoundException("user not found"));
+       LocationEntity locationEntity = locationRepository.findByCurrentAndUserCredentialEntity(true, userEntity);
+        String location = locationEntity.getStreet() + " " + locationEntity.getStreetNumber() + " " + locationEntity.getCity();
+        return ResponseEntity.ok(location);
+    }
 }

@@ -47,4 +47,6 @@ public class RestaurantController {
      return restaurantService.getRestaurantsFiltered(foodType, rating, priceRange);
     }
 
+
+
 }

@@ -31,4 +31,8 @@ public class LocationController {
     ){
         return locationService.updateLocation(id, principal);
     }
+    @GetMapping
+    public ResponseEntity<String> getCurrentLocation(Authentication authentication){
+        return locationService.getCurrentLocation(authentication);
+    }
 }
