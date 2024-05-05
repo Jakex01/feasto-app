@@ -11,6 +11,7 @@ import org.restaurant.model.OrderEntity;
 import org.restaurant.repository.OrderRepository;
 import org.restaurant.request.OrderRequest;
 import org.restaurant.util.JwtUtil;
+import org.restaurant.validators.ObjectsValidator;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,14 +34,13 @@ public class OrderServiceImpl implements OrderService{
     private final PdfServiceImpl pdfService;
     private final RabbitTemplate rabbitTemplate;
     private final WebClient webClient;
+    private final ObjectsValidator<OrderRequest> orderRequestObjectsValidator;
 
     @SneakyThrows
     public ResponseEntity<?> postOrder(OrderRequest orderRequest, String token)  {
-
-
+        orderRequestObjectsValidator.validate(orderRequest);
         OrderEntity order = MapStructMapper.INSTANCE.requestToEntity(orderRequest);
         orderRepository.save(order);
-
         SendPdfToNotification(orderRequest, token);
 
         return ResponseEntity.ok(HttpStatus.CREATED);
