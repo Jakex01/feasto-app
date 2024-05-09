@@ -17,8 +17,8 @@ public class ConversationController {
     private final ConversationService conversationService;
 
     @GetMapping
-    public ResponseEntity<List<ConversationResponse>> getAllConversations(@RequestHeader(value = "Authorization") String token){
-        return conversationService.getAllConversations(token);
+    public ResponseEntity<List<ConversationResponse>> getAllConversationsByRestaurantAndUser(@RequestHeader(value = "Authorization") String token){
+        return conversationService.getAllConversationsByRestaurantAndUser(token);
     }
     @PostMapping
     public ResponseEntity<?> postConversation(@RequestBody ConversationRequest conversationRequest){

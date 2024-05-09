@@ -31,7 +31,7 @@ public class ConversationServiceImpl implements ConversationService{
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @Override
-    public ResponseEntity<List<ConversationResponse>> getAllConversations(String token) {
+    public ResponseEntity<List<ConversationResponse>> getAllConversationsByRestaurantAndUser(String token) {
         Long userId = conversationUtil.getUsersId(token);
         List<ConversationResponse> conversationResponses = conversationRepository
                 .findByUserId(userId)

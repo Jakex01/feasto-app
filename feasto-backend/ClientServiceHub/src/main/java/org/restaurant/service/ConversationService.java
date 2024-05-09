@@ -11,7 +11,7 @@ import java.util.Set;
 public interface ConversationService {
     ResponseEntity<?> postConversation(ConversationRequest conversationRequest);
 
-    ResponseEntity<List<ConversationResponse>> getAllConversations(String token);
+    ResponseEntity<List<ConversationResponse>> getAllConversationsByRestaurantAndUser(String token);
 
     ResponseEntity<Set<RestaurantConversationsResponse>> getAllRestaurantsWithConversationByUser(String token);
 }
