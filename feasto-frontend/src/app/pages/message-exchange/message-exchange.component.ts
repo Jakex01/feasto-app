@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgClass, NgForOf, CommonModule, NgIf, DatePipe} from "@angular/common";
+import {MessageService} from "../../service/message-service/message.service";
+import {RestaurantConversationsResponse} from "../../model/response/RestaurantConversationsResponse";
 
 interface Restaurant {
   id: string;
@@ -28,7 +30,7 @@ interface ChatArchive {
   templateUrl: './message-exchange.component.html'
 })
 
-export class MessageExchangeComponent {
+export class MessageExchangeComponent implements OnInit{
   selectedRestaurant: string | null = null;
   selectedArchivedChat: string | null = null;
   newMessage = '';
@@ -69,8 +71,20 @@ export class MessageExchangeComponent {
       { type: 'restaurant', content: 'Otwarte od 10 do 22.' }
     ]
   };
+  usersConversation: RestaurantConversationsResponse[];
+  constructor(private messageService: MessageService) {}
 
-  constructor() {}
+  ngOnInit(): void {
+    this.messageService.getAllRestaurantsWithConversationByUser().subscribe({
+      next: (data) => {
+        this.usersConversation = data;
+        console.log('Conversations:', this.usersConversation);  // Optional: for debugging
+      },
+      error: (error) => {
+        console.error('Error fetching data:', error);
+      }
+    });
+    }
 
   onRestaurantChange(): void {
     this.selectedArchivedChat = null;  // Clear archived chat selection when changing restaurants
