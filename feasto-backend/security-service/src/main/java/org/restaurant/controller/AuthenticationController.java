@@ -37,7 +37,6 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ){
-        System.out.println("coming here");
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
     @PostMapping("/refresh-token")

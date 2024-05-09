@@ -53,7 +53,6 @@ public class OrderServiceImpl implements OrderService{
         orderRepository.save(order);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
-
     @SneakyThrows
     public void SendPdfToNotification(OrderRequest orderRequest, String token)  {
 

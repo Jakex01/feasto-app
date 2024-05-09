@@ -23,10 +23,7 @@ public class OrderUtil {
                 int activeDeliveries = orderRepository.countBySpecificStatuses(activeStatuses);
                 int delayPerOrder = 3;
                 int delayDueToActiveDeliveries = activeDeliveries * delayPerOrder;
-
-
-
-                String origin =  webClient.get()
+                String origin =  webClient.get() // restTEMPLATE
                         .uri(uriBuilder -> uriBuilder
                                 .scheme("http")
                                 .host("localhost")
@@ -38,7 +35,6 @@ public class OrderUtil {
                         .retrieve()
                         .bodyToMono(String.class)
                         .block();
-
                 String destination = webClient.get()
                         .uri(uriBuilder -> uriBuilder
                                 .scheme("http")
@@ -50,7 +46,6 @@ public class OrderUtil {
                         .retrieve()
                         .bodyToMono(String.class)
                         .block();
-
                 String travelTime = webClient.get()
                         .uri(uriBuilder -> uriBuilder
                                 .scheme("http")

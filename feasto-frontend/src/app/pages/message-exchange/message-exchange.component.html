@@ -1,0 +1,44 @@
+<div class="chat-container">
+  <!-- Select Container for choosing a restaurant -->
+  <div class="select-container">
+    <select [(ngModel)]="selectedRestaurant" (change)="onRestaurantChange()">
+      <option *ngFor="let restaurant of restaurants" [value]="restaurant.id">{{ restaurant.name }}</option>
+    </select>
+  </div>
+
+  <!-- New Dropdown for Selecting Archived Chat -->
+  <div class="select-container" *ngIf="selectedRestaurant" [@fadeIn]>
+    <select [(ngModel)]="selectedArchivedChat" (change)="onArchivedChatChange()">
+      <option *ngFor="let chat of archivedChats" [value]="chat.id">{{ chat.date | date: 'medium' }}</option>
+    </select>
+  </div>
+
+  <!-- Messages container only shown when a restaurant is selected -->
+  <div *ngIf="selectedRestaurant && !selectedArchivedChat" class="messages">
+    <div *ngFor="let message of messages[selectedRestaurant]" class="message"
+         [ngClass]="{'customer': message.type === 'customer', 'restaurant': message.type === 'restaurant'}">
+      <span class="sender-label">{{ message.type }}</span>
+      {{ message.content }}
+    </div>
+  </div>
+
+  <!-- Archived Messages container shown when an archived chat is selected -->
+  <div *ngIf="selectedArchivedChat" class="messages">
+    <div *ngFor="let message of archivedMessages[selectedArchivedChat]" class="message"
+         [ngClass]="{'customer': message.type === 'customer', 'restaurant': message.type === 'restaurant'}">
+      <span class="sender-label">{{ message.type }}</span>
+      {{ message.content }}
+    </div>
+  </div>
+
+  <!-- Message form only shown when a restaurant is selected and no archived chat is selected -->
+  <div *ngIf="selectedRestaurant && !selectedArchivedChat" class="message-form">
+    <textarea [(ngModel)]="newMessage" placeholder="Type your message..."></textarea>
+    <button (click)="sendMessage()">Send</button>
+  </div>
+  <div *ngIf="selectedRestaurant && selectedArchivedChat" class="archive-form">
+    <h3>Archived Chat!</h3>
+  </div>
+
+
+</div>

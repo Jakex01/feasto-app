@@ -1,8 +1,12 @@
-package org.restaurant.validators;
+package org.restaurant.validator;
 
-import jakarta.validation.*;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.restaurant.exceptions.ObjectNotValidException;
 import org.springframework.stereotype.Component;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 

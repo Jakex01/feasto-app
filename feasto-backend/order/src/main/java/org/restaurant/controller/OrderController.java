@@ -20,8 +20,6 @@ consumes = MediaType.APPLICATION_JSON_VALUE)
 public class OrderController {
 
     private final OrderService orderService;
-
-
     @PostMapping
     public ResponseEntity<?> postOrder(@RequestBody OrderRequest orderRequest, @RequestHeader(value = "Authorization") String token) throws DocumentException, IOException, URISyntaxException {
         return orderService.postOrder(orderRequest, token);

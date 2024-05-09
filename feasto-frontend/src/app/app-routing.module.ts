@@ -9,6 +9,7 @@ import {LoginPageComponent} from "./authentication/login-page/login-page.compone
 import {RegisterPageComponent} from "./authentication/register-page/register-page.component";
 import {OrderCheckoutPageComponent} from "./order-checkout-page/order-checkout-page.component";
 import {OrdersComponent} from "./pages/orders/orders.component";
+import {MessageExchangeComponent} from "./pages/message-exchange/message-exchange.component";
 
 
 
@@ -50,6 +51,10 @@ const routes: Routes = [
   {
     path:'orders',
     component: OrdersComponent
+  },
+  {
+    path: 'messages',
+    component: MessageExchangeComponent
   }
 ];
 

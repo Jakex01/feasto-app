@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.restaurant.mapstruct.dto.RestaurantEntityDTO;
 import org.restaurant.request.CreateRestaurantRequest;
+import org.restaurant.response.RestaurantConversationResponse;
 import org.restaurant.response.RestaurantResponse;
 import org.restaurant.service.RestaurantService;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,6 +47,11 @@ public class RestaurantController {
             @RequestParam(required = false) Integer priceRange
     ){
      return restaurantService.getRestaurantsFiltered(foodType, rating, priceRange);
+    }
+    @GetMapping("/details")
+    public ResponseEntity<Set<RestaurantConversationResponse>> getRestaurantsByIds(@RequestParam("ids") Set<Long> ids) {
+        Set<RestaurantConversationResponse> responses = restaurantService.findRestaurantsByIds(ids);
+        return ResponseEntity.ok(responses);
     }
 
 

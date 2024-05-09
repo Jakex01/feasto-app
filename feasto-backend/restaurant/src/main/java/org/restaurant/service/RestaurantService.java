@@ -11,6 +11,7 @@ import org.restaurant.model.RestaurantEntity;
 
 import org.restaurant.repository.RestaurantRepository;
 import org.restaurant.request.CreateRestaurantRequest;
+import org.restaurant.response.RestaurantConversationResponse;
 import org.restaurant.response.RestaurantResponse;
 import org.restaurant.specification.RestaurantSpecification;
 import org.restaurant.validators.ObjectsValidator;
@@ -21,6 +22,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.restaurant.util.RestaurantUtils.*;
 
@@ -85,5 +88,11 @@ public class RestaurantService {
             restaurantRepository.save(restaurant);
             restaurantRepository.flush();
         });
+    }
+
+    public Set<RestaurantConversationResponse> findRestaurantsByIds(Set<Long> ids) {
+        return restaurantRepository.findAllById(ids).stream()
+                .map(restaurant -> new RestaurantConversationResponse(restaurant.getRestaurantId(), restaurant.getName()))
+                .collect(Collectors.toSet());
     }
 }
