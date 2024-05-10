@@ -1,0 +1,133 @@
+:root {
+  --primary-color: #28a745; /* Zielony Bootstrap */
+  --secondary-color: #ffc107; /* Pomarańczowy Bootstrap */
+  --background-color: #f8f9fa; /* Jasny szary Bootstrap */
+  --text-color: #343a40; /* Ciemnoszary Bootstrap */
+  --font-size-base: 2rem; /* Base font size */
+}
+
+.container {
+  max-width: 960px;
+  margin-top: 5vh;
+}
+
+.card-header {
+  background-color: var(--primary-color);
+  color: black;
+  font-size: calc(var(--font-size-base) * 2);
+}
+
+.card {
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header:first-child {
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.card-body {
+  background-color: var(--background-color);
+  font-size: calc(var(--font-size-base) * 1.25);
+}
+
+p {
+  margin-bottom: 1rem; /* Increased space below paragraphs */
+}
+
+.btn {
+  font-size: calc(var(--font-size-base) * 1.5);
+  padding: 0.75rem 1.25rem; /* Larger padding for bigger buttons */
+}
+
+.form-select {
+  color: var(--text-color);
+  font-size: calc(var(--font-size-base) * 1.25);
+  padding: 0.5rem; /* Larger padding for select */
+}
+
+.fw-bold {
+  font-weight: bold;
+}
+
+.btn-paypal {
+  color: var(--text-color);
+  border: 2px solid black; /* Thicker border for visibility */
+  background-color: transparent;
+  padding: 0.75rem 1.25rem; /* Larger padding for a bigger button */
+  font-size: calc(var(--font-size-base) * 1.25);
+  margin-top: 1rem;
+  transition: opacity 0.3s ease; /* Smooth transition for hover effect */
+  width: 26rem;
+}
+.btn-payment-method.active {
+  background-color: blue;
+  color: white;
+}
+
+.btn-paypal:hover {
+  background-color: #007bff; /* Bootstrap primary color, for example */
+  color: white; /* Change text color to white */
+  opacity: 1; /* Reset opacity if you want the button to remain fully opaque */
+}
+
+
+.custom-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border: 1px solid #ccc;
+  border-radius: 20px; /* Adds rounded corners to the card */
+  width: 100%;
+}
+
+
+.custom-card-title {
+  font-size: 24px; /* Larger title */
+  color: #343a40; /* Dark grey for professional look */
+  margin-bottom: 20px; /* More space below the title */
+}
+
+.custom-form-select {
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+}
+
+.custom-total {
+  font-size: 20px; /* Larger total */
+  color: #28a745; /* Bootstrap green for emphasis */
+  margin-top: 15px; /* Space above the total */
+}
+
+.custom-order-button {
+  font-size: 18px; /* Larger button text */
+  padding: 10px 24px; /* Bigger button */
+  width: 100%; /* Full width button */
+}
+
+@media (max-width: 768px) {
+  .custom-card {
+    max-width: 100%; /* Full width on smaller screens */
+  }
+}
+
+
+.btn-back{
+  background-color: transparent; /* Bez tła */
+  border: none; /* Brak obramowania */
+  color: #333; /* Kolor tekstu, dostosuj według potrzeb */
+  cursor: pointer; /* Styl kursora jak dla przycisku */
+  padding: 5px; /* Wewnętrzny odstęp, dostosuj według potrzeb */
+  font-size: 2em; /* Wielkość czcionki, dostosuj według potrzeb */
+  position: fixed;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.tip-selected {
+  /* Styles for when a tip is selected */
+  border: 2px solid green;
+}
+
+.no-tip {
+  /* Styles for when no tip is selected */
+  border: 2px solid red;
+}

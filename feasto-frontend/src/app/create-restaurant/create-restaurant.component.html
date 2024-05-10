@@ -1,0 +1,172 @@
+<!--&lt;!&ndash;<div class="form-container"> &lt;!&ndash; This div is used to center the form on the page &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-fields">&ndash;&gt;-->
+<!--&lt;!&ndash;    <mat-form-field appearance="fill">&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-label>Restaurant name</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;      <input matInput formControlName="name" style="height: 70px">&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-error *ngIf="f['name'].touched && f['name'].errors">&ndash;&gt;-->
+<!--&lt;!&ndash;        <span *ngIf="f['name'].errors['required']">Name is required.</span>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span *ngIf="f['name'].errors['minlength']">Name must be at least 3 characters long.</span>&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-error>&ndash;&gt;-->
+<!--&lt;!&ndash;    </mat-form-field>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <mat-form-field appearance="fill">&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-label>Description</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;      <input matInput formControlName="email" style="height: 70px">&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-error *ngIf="f['email'].touched && f['email'].errors">&ndash;&gt;-->
+<!--&lt;!&ndash;        <span *ngIf="f['email'].errors['required']">Email is required.</span>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span *ngIf="f['email'].errors['email']">Please enter a valid email address.</span>&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-error>&ndash;&gt;-->
+<!--&lt;!&ndash;    </mat-form-field>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <mat-form-field>&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-label>Select me</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-select style="height: 70px" formControlName="field" panelClass="dropdown-style">&ndash;&gt;-->
+<!--&lt;!&ndash;        <mat-option value="option">Option</mat-option>&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-select>&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>&ndash;&gt;-->
+<!--&lt;!&ndash;    </mat-form-field>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    <mat-form-field appearance="fill">&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-label>Password</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;      <input matInput type="password" formControlName="password" style="height: 70px">&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-error *ngIf="f['password'].touched && f['password'].errors">&ndash;&gt;-->
+<!--&lt;!&ndash;        <span *ngIf="f['password'].errors['required']">Password is required.</span>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters long.</span>&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-error>&ndash;&gt;-->
+<!--&lt;!&ndash;    </mat-form-field>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <mat-form-field appearance="fill">&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-label>Wybierz obraz</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="file" hidden (change)="onFileSelected($event)" #fileInput accept="image/*">&ndash;&gt;-->
+<!--&lt;!&ndash;      <button mat-stroked-button (click)="fileInput.click()">Wybierz plik</button>&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-icon *ngIf="selectedFileName">done</mat-icon>&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-error *ngIf="fileInputInvalid">&ndash;&gt;-->
+<!--&lt;!&ndash;        Proszę wybrać plik obrazu.&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-error>&ndash;&gt;-->
+<!--&lt;!&ndash;    </mat-form-field>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>&ndash;&gt;-->
+<!--&lt;!&ndash;  </form>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--<div class="container mt-5">-->
+<!--  <form #myForm="ngForm" (ngSubmit)="submitForm(myForm)" class="restaurant-form" novalidate>-->
+<!--    <div class="form-group">-->
+<!--      <label for="restaurantName" class="form-label">Restaurant Name</label>-->
+<!--      <input type="text" class="form-control" id="restaurantName" name="restaurantName" placeholder="Enter restaurant name" [(ngModel)]="formData.name" #restaurantName="ngModel" required>-->
+<!--      <div *ngIf="restaurantName.invalid && restaurantName.touched" class="invalid-feedback">-->
+<!--        Please enter a restaurant name.-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="description" class="form-label">Description</label>-->
+<!--      <textarea class="form-control" id="description" name="description" rows="3" placeholder="Describe the restaurant" [(ngModel)]="formData.description" #description="ngModel" required></textarea>-->
+<!--      <div *ngIf="description.invalid && description.touched" class="invalid-feedback">-->
+<!--        Please provide a description.-->
+<!--      </div>-->
+<!--    </div>-->
+
+
+
+
+<!--    <div class="form-group">-->
+<!--      <label for="city" class="form-label">City</label>-->
+<!--      <input class="form-control" id="city" name="city" placeholder="Place the city" [(ngModel)]="formData.address" #cityModel="ngModel" required/>-->
+
+<!--      <div *ngIf="description.invalid && description.touched" class="invalid-feedback">-->
+<!--        Please provide a city.-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <div class="form-group">-->
+<!--      <label for="phoneNumber" class="form-label">Phone Number</label>-->
+<!--      <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Enter phone number" [(ngModel)]="formData.phoneNumber" #phoneNumber="ngModel" required>-->
+<!--      <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="invalid-feedback">-->
+<!--        Please enter a valid phone number.-->
+<!--      </div>-->
+<!--    </div>-->
+
+
+<!--    <div class="form-group">-->
+<!--      <label for="description" class="form-label">Prices</label>-->
+<!--      <input class="form-control" id="prices" name="prices" rows="3" placeholder="Select prices" [(ngModel)]="formData.prices" #prices="ngModel" required/>-->
+<!--      <div *ngIf="prices.invalid && prices.touched" class="invalid-feedback">-->
+<!--        Please provide a description.-->
+<!--      </div>-->
+<!--    </div>-->
+
+
+<!--    <div class="row">-->
+<!--      <div class="col-md-6 form-group">-->
+<!--        <label for="openingHour" class="form-label">Opening Hour</label>-->
+<!--        <select class="form-control" id="openingHour" name="openingHour" [(ngModel)]="openingHour" (ngModelChange)="updateHoursOpened()" required>-->
+<!--          <option value="" disabled>Select Opening Hour</option>-->
+<!--          <option *ngFor="let hour of hours" [value]="hour">{{ hour }}:00</option>-->
+<!--        </select>-->
+<!--      </div>-->
+
+<!--      <div class="col-md-6 form-group">-->
+<!--        <label for="closingHour" class="form-label">Closing Hour</label>-->
+<!--        <select class="form-control" id="closingHour" name="closingHour" [(ngModel)]="closingHour" (ngModelChange)="updateHoursOpened()" required>-->
+<!--          <option value="" disabled>Select Closing Hour</option>-->
+<!--          <option *ngFor="let hour of hours" [value]="hour">{{ hour }}:00</option>-->
+<!--        </select>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <div class="form-group">-->
+<!--      <label for="foodType" class="form-label">Food Type</label>-->
+<!--      <select class="form-control" id="foodType" name="foodType" [(ngModel)]="formData.foodType" #foodType="ngModel" required>-->
+<!--        <option value="">Select Food Type</option>-->
+<!--        <option value="Italian">Italian</option>-->
+<!--        <option value="Chinese">Chinese</option>-->
+<!--        <option value="Indian">Indian</option>-->
+<!--        &lt;!&ndash; Add more options as needed &ndash;&gt;-->
+<!--      </select>-->
+<!--      <div *ngIf="foodType.invalid && foodType.touched" class="invalid-feedback">-->
+<!--        Please select a food type.-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="image" class="form-label">Restaurant Image</label>-->
+<!--      <input type="file" class="form-control-file" id="image" name="image" (change)="onFileSelected($event)"  required>-->
+<!--    </div>-->
+<!--    <button type="submit" class="btn btn-primary" [disabled]="myForm.invalid">Submit</button>-->
+<!--  </form>-->
+<!--</div>-->
+
+<div class="container mt-4">
+
+  <!-- Carousel for Food Types -->
+  <div id="foodTypeCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" ngSrc="./assets/delicious1.jpg" alt="First slide">
+        <!-- Add image description here -->
+      </div>
+      <!-- Repeat for each type of food -->
+    </div>
+    <a class="carousel-control-prev" href="#foodTypeCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </a>
+    <a class="carousel-control-next" href="#foodTypeCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <!-- Cards for Restaurants -->
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let restaurant of restaurants">
+      <div class="card">
+        <img class="card-img-top" ngSrc="./assets/delicious1.jpg" alt="Restaurant image" height="500" width="750">
+        <div class="card-body">
+          <h5 class="card-title">{{ restaurant.name }}</h5>
+          <p class="card-text">{{ restaurant.description }}</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
